@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://ogsrjopj7pja"]
+
+[ext_resource type="Script" uid="uid://bop1yg7ic4bcb" path="res://scripts/player/player.gd" id="1_dovo2"]
+[ext_resource type="Texture2D" uid="uid://dshb8g8bvxju1" path="res://textures/1x1_white.png" id="2_gmlin"]
+[ext_resource type="Script" uid="uid://bq7y17rfknm5s" path="res://scripts/player/wire_attacher.gd" id="3_gmlin"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ufxs0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dovo2"]
+radius = 25.4951
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_dovo2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ufxs0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(20, 20)
+texture = ExtResource("2_gmlin")
+
+[node name="WireAttacher" type="Area2D" parent="." node_paths=PackedStringArray("wire_line")]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("3_gmlin")
+wire_line = NodePath("../WireLine2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WireAttacher"]
+shape = SubResource("CircleShape2D_dovo2")
+
+[node name="WireLine2D" type="Line2D" parent="."]
+top_level = true

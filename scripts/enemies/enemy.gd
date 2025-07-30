@@ -1,0 +1,89 @@
+class_name Enemy extends CharacterBody2D
+
+enum State
+{
+	WANDER = 0,
+	ATTACK = 1
+}
+
+@export var min_wander_path_distance: float = 20
+@export var max_wander_path_distance: float = 100
+
+@onready var nav_agent: NavAgent = $NavigationAgent2D
+@onready var projectile_shooter: ProjectileShooter = $ProjectileShooter
+@onready var target: RandomlyRotatingTarget = $RandomlyRotatingTarget
+
+var current_state: State = State.WANDER
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var player: Player
+
+
+func _ready() -> void:
+	player = get_tree().get_first_node_in_group("player")
+	SignalBus.wire_attached.connect(on_wire_attached)
+	enter_wander_state()
+
+
+func _process(delta: float) -> void:
+	match current_state:
+		State.WANDER:
+			process_wander_state(delta)
+		State.ATTACK:
+			process_attack_state(delta)
+
+
+func kill() -> void:
+	SignalBus.enemy_killed.emit(self)
+	target.queue_free()
+	queue_free()
+
+
+func get_random_direction() -> Vector2:
+	var randi: int = rng.randi_range(0, 7)
+	return [
+		Vector2(0, 1),
+		Vector2(1, 0),
+		Vector2(1, 1),
+		Vector2(-1, 1),
+		Vector2(1, -1),
+		Vector2(-1, -1),
+		Vector2(0, -1),
+		Vector2(-1, 0)
+	][randi].normalized()
+
+
+func on_wire_attached(node: Node2D) -> void:
+	if node == self:
+		enter_attack_state()
+
+
+## ===================== Wander State =========================
+
+func enter_wander_state() -> void:
+	current_state = State.WANDER
+	pick_random_wander_point()
+
+
+func process_wander_state(delta: float) -> void:
+	if nav_agent.is_navigation_finished():
+		pick_random_wander_point()
+
+func pick_random_wander_point() -> void:
+	var wander_direction: Vector2 = get_random_direction()
+	var wander_path_distance: float = rng.randf_range(min_wander_path_distance, max_wander_path_distance)
+	nav_agent.set_movement_target(global_position + wander_direction * wander_path_distance)
+
+## ==========================================================
+
+## ===================== Attack State =========================
+
+func enter_attack_state() -> void:
+	current_state = State.ATTACK
+	projectile_shooter.set_active(true)
+
+
+func process_attack_state(delta: float) -> void:
+	nav_agent.set_movement_target(target.target.global_position)
+	projectile_shooter.shoot_direction = (player.global_position - global_position).normalized()
+
+## ==========================================================

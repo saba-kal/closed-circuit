@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnqext3yo65b8"]
+
+[ext_resource type="Texture2D" uid="uid://dshb8g8bvxju1" path="res://textures/1x1_white.png" id="1_6xk8f"]
+[ext_resource type="Script" uid="uid://btkuxu2cve4eu" path="res://scripts/enemies/enemy.gd" id="1_8e3ao"]
+[ext_resource type="Script" uid="uid://c4nwd3th3fyrg" path="res://scripts/enemies/nav_agent.gd" id="3_38ino"]
+[ext_resource type="Script" uid="uid://c6y8rd236kr2e" path="res://scripts/projectiles/projectile_shooter.gd" id="4_fcftc"]
+[ext_resource type="PackedScene" uid="uid://sl86ko4jacnu" path="res://scenes/projectiles/basic_projectile.tscn" id="5_lu5c6"]
+[ext_resource type="Script" uid="uid://ctsnktrs0nfoi" path="res://scripts/enemies/randomly_rotating_target.gd" id="6_nb6gf"]
+[ext_resource type="Texture2D" uid="uid://c3u0vuoej5wwr" path="res://textures/8x8_projectile.png" id="7_jt03m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6we3w"]
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_8e3ao")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6we3w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(20, 20)
+texture = ExtResource("1_6xk8f")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("character_body")]
+avoidance_enabled = true
+radius = 50.0
+script = ExtResource("3_38ino")
+character_body = NodePath("..")
+
+[node name="ProjectileShooter" type="Node2D" parent="."]
+script = ExtResource("4_fcftc")
+projectile_scene = ExtResource("5_lu5c6")
+projectile_speed = 120.0
+time_between_shots = 2.0
+projectile_count = 3
+
+[node name="RandomlyRotatingTarget" type="Node2D" parent="."]
+script = ExtResource("6_nb6gf")
+
+[node name="Marker2D" type="Marker2D" parent="RandomlyRotatingTarget"]
+position = Vector2(111, 0)
+
+[node name="DebugSprite" type="Sprite2D" parent="RandomlyRotatingTarget/Marker2D"]
+visible = false
+texture = ExtResource("7_jt03m")
