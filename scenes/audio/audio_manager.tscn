@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0htaf4m1hx78"]
+
+[ext_resource type="Script" uid="uid://hep2wvwlds2c" path="res://scripts/audio/audio_manager.gd" id="1_cktme"]
+[ext_resource type="AudioStream" uid="uid://b4yesp3ncvapv" path="res://audio/music/closed_circuit_main_theme.wav" id="1_dob6e"]
+[ext_resource type="AudioStream" uid="uid://14tsa2blpwd5" path="res://audio/sfx/button_click.wav" id="2_75yjh"]
+
+[node name="AudioManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_cktme")
+
+[node name="MusicStream" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_dob6e")
+volume_db = -7.996
+autoplay = true
+
+[node name="ButtonClickStream" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_75yjh")

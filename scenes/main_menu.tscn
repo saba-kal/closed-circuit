@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cy7ivfetr20kt"]
+[gd_scene load_steps=6 format=3 uid="uid://cy7ivfetr20kt"]
 
 [ext_resource type="PackedScene" uid="uid://cvtuitqtyy3uv" path="res://scenes/ui/nav_button.tscn" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://y8hwvtlnyme1" path="res://scripts/ui/scene_change_button.gd" id="2_ekxnf"]
 [ext_resource type="Script" uid="uid://btxr5gst17m7e" path="res://scripts/ui/quit_button.gd" id="3_bqqt6"]
+[ext_resource type="Script" uid="uid://qkp5573g2xg5" path="res://scripts/ui/volume_slider.gd" id="4_8ln24"]
+[ext_resource type="Texture2D" uid="uid://duoahwn7orqbp" path="res://textures/ui/16x16_sound_icon.png" id="4_wu84c"]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -42,3 +44,44 @@ script = ExtResource("2_ekxnf")
 layout_mode = 2
 text = "QUIT"
 script = ExtResource("3_bqqt6")
+
+[node name="SoundSetting" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -278.0
+offset_top = -63.0
+offset_right = -27.0
+offset_bottom = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/SoundSetting"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -21.0
+offset_bottom = 21.0
+grow_horizontal = 0
+grow_vertical = 2
+value = 50.0
+script = ExtResource("4_8ln24")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/SoundSetting"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+texture = ExtResource("4_wu84c")

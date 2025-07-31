@@ -2,6 +2,8 @@ extends Area2D
 
 @export var wire_line: Line2D
 
+@onready var wire_attached_sound: AudioStreamPlayer = $WireAttachedSound
+
 var attached_bodies: Array[Node2D] = []
 
 
@@ -24,6 +26,7 @@ func on_body_entered(body: Node2D) -> void:
 		attached_bodies.insert(len(attached_bodies) - 1, body)
 		wire_line.add_point(Vector2.ZERO)
 		SignalBus.wire_attached.emit(body)
+		wire_attached_sound.play()
 
 
 func kill_enemies() -> void:

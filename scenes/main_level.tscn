@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://c8clp8ccdf4jg"]
+[gd_scene load_steps=19 format=4 uid="uid://c8clp8ccdf4jg"]
 
 [ext_resource type="PackedScene" uid="uid://ogsrjopj7pja" path="res://scenes/player/player.tscn" id="1_ufxs0"]
 [ext_resource type="Script" uid="uid://daqrc0wubb3b2" path="res://scripts/camera/follow_cam.gd" id="2_adxub"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://c01pw2lepdx51" path="res://scripts/ui/pause_menu.gd" id="10_fkrx8"]
 [ext_resource type="Script" uid="uid://c6unpj57o1d78" path="res://scripts/ui/game_over_menu.gd" id="10_mwgft"]
 [ext_resource type="Script" uid="uid://y8hwvtlnyme1" path="res://scripts/ui/scene_change_button.gd" id="11_2sb77"]
+[ext_resource type="AudioStream" uid="uid://d23v0l1dq5b0d" path="res://audio/sfx/game_over_sound.wav" id="14_ff0s2"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qmak7"]
 vertices = PackedVector2Array(396, -467.609, 428, -467.828, 428, -467.609, 465.023, -467.867, 465.969, 466.969, -465.023, 466.023, -465.969, -466.039, 364, -467.742, 364, -467.633, 392.477, -467.797, 396, -467.797)
@@ -173,6 +174,7 @@ texture = ExtResource("8_k5pu3")
 stretch_mode = 4
 
 [node name="GameOverMenu" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,6 +224,9 @@ layout_mode = 2
 text = "MAIN MENU"
 script = ExtResource("11_2sb77")
 scene_name = "main_menu"
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="CanvasLayer/GameOverMenu"]
+stream = ExtResource("14_ff0s2")
 
 [node name="PauseMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("resume_button", "main_menu_button")]
 process_mode = 3

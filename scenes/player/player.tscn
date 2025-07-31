@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ogsrjopj7pja"]
+[gd_scene load_steps=8 format=3 uid="uid://ogsrjopj7pja"]
 
 [ext_resource type="Script" uid="uid://bop1yg7ic4bcb" path="res://scripts/player/player.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://dshb8g8bvxju1" path="res://textures/1x1_white.png" id="2_gmlin"]
 [ext_resource type="Script" uid="uid://bq7y17rfknm5s" path="res://scripts/player/wire_attacher.gd" id="3_gmlin"]
+[ext_resource type="AudioStream" uid="uid://c5xnw5bxaln3e" path="res://audio/sfx/player_hit.wav" id="4_lvxji"]
+[ext_resource type="AudioStream" uid="uid://hoshkco80vio" path="res://audio/sfx/wire_attached_sound.wav" id="4_p47bc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufxs0"]
 
@@ -31,5 +33,11 @@ wire_line = NodePath("../WireLine2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WireAttacher"]
 shape = SubResource("CircleShape2D_dovo2")
 
+[node name="WireAttachedSound" type="AudioStreamPlayer" parent="WireAttacher"]
+stream = ExtResource("4_p47bc")
+
 [node name="WireLine2D" type="Line2D" parent="."]
 top_level = true
+
+[node name="PlayerHitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_lvxji")

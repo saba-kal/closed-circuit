@@ -8,6 +8,8 @@ class_name ProjectileShooter extends Node2D
 @export_range(1, 16) var projectile_count: int = 1
 @export var angle_between_projectiles: float = 15.0
 
+@onready var shoot_sound: AudioStreamPlayer2D = $ShootSound
+
 var time_since_last_shot: float = 10
 var is_active: bool = false
 
@@ -32,6 +34,7 @@ func shoot() -> void:
 		projectile.direction = direction
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = global_position
+	shoot_sound.play()
 
 
 func set_active(active: bool) -> void:

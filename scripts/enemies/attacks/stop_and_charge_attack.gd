@@ -1,7 +1,7 @@
 extends EnemyAttack
 
 @export var stop_distance: float = 150
-@export var windup_time: float = 0.5
+@export var windup_time: float = 1.0
 @export var charge_time: float = 0.5
 @export var charge_speed: float = 800
 @export var damage: int = 1
@@ -59,7 +59,8 @@ func charge() -> void:
 	windup_timer.start(windup_time)
 	await windup_timer.timeout
 	is_winding_up = false
-
+	if !is_instance_valid(player):
+		return
 	is_charging = true
 	direction = (player.global_position - global_position).normalized()
 	charge_timer.start(charge_time)
@@ -68,5 +69,5 @@ func charge() -> void:
 
 
 func on_body_entered(body: Node2D) -> void:
-	if body.has_method("take_damage"):
+	if body.has_method("take_damage") and is_charging:
 		body.take_damage(damage)

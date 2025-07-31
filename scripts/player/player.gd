@@ -5,6 +5,8 @@ signal health_changed(new_health: int)
 @export var speed: float = 400
 @export var max_health: int = 3
 
+@onready var player_hit_sound: AudioStreamPlayer = $PlayerHitSound
+
 var current_health: int
 
 
@@ -21,6 +23,7 @@ func _physics_process(delta: float) -> void:
 func take_damage(damge: int) -> void:
 	current_health -= damge
 	health_changed.emit(current_health)
+	player_hit_sound.play()
 	if current_health <= 0:
 		SignalBus.game_over.emit()
 		queue_free()
