@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://cnqext3yo65b8"]
+
+[ext_resource type="Texture2D" uid="uid://dshb8g8bvxju1" path="res://textures/1x1_white.png" id="1_6xk8f"]
+[ext_resource type="Script" uid="uid://btkuxu2cve4eu" path="res://scripts/enemies/enemy.gd" id="1_8e3ao"]
+[ext_resource type="PackedScene" uid="uid://cdtls42t677qv" path="res://scenes/enemies/components/nav_agent.tscn" id="3_mwu22"]
+[ext_resource type="Script" uid="uid://c6y8rd236kr2e" path="res://scripts/projectiles/projectile_shooter.gd" id="4_fcftc"]
+[ext_resource type="PackedScene" uid="uid://sl86ko4jacnu" path="res://scenes/projectiles/small_projectile.tscn" id="5_lu5c6"]
+[ext_resource type="PackedScene" uid="uid://c6kh2lk3igjic" path="res://scenes/enemies/attacks/circle_and_shoot_attack.tscn" id="6_6taoi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6we3w"]
+
+[node name="SlimeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_8e3ao")
+attack = NodePath("CircleAndShootAttack")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6we3w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(20, 20)
+texture = ExtResource("1_6xk8f")
+
+[node name="NavAgent" parent="." instance=ExtResource("3_mwu22")]
+
+[node name="ProjectileShooter" type="Node2D" parent="."]
+script = ExtResource("4_fcftc")
+projectile_scene = ExtResource("5_lu5c6")
+projectile_speed = 120.0
+time_between_shots = 2.0
+projectile_count = 3
+
+[node name="CircleAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("6_6taoi")]
+nav_agent = NodePath("../NavAgent")
+projectile_shooter = NodePath("../ProjectileShooter")

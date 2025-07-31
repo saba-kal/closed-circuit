@@ -18,6 +18,7 @@ func _physics_process(delta: float) -> void:
 
 func take_damage(damge: int) -> void:
 	current_health -= damge
+	print("player took damage")
 	if current_health <= 0:
 		SignalBus.game_over.emit()
 		#queue_free()

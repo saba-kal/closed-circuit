@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://jmqu25vi3qpw"]
+
+[ext_resource type="Script" uid="uid://b7v0arotu4djf" path="res://scripts/enemies/attacks/stop_and_charge_attack.gd" id="1_mlu5o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mlu5o"]
+
+[node name="StopAndChargeAttack" type="Node2D"]
+script = ExtResource("1_mlu5o")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_mlu5o")

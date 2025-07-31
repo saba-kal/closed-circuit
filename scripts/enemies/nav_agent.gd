@@ -1,11 +1,14 @@
 class_name NavAgent extends NavigationAgent2D
 
 @export var move_speed: float = 100
-@export var character_body: CharacterBody2D
+
+var character_body: CharacterBody2D
 
 
 func _ready() -> void:
+	character_body = get_parent()
 	velocity_computed.connect(on_velocity_computed)
+	max_speed = move_speed
 
 
 func _physics_process(delta: float) -> void:

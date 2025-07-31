@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://bs2cykno05bgw"]
+
+[ext_resource type="Script" uid="uid://btkuxu2cve4eu" path="res://scripts/enemies/enemy.gd" id="1_0o2h6"]
+[ext_resource type="Script" uid="uid://dr3l56feccix2" path="res://scripts/enemies/enemy_sprite_changer.gd" id="1_ja5cg"]
+[ext_resource type="Texture2D" uid="uid://bvpekmek0lygw" path="res://textures/enemies/skull_enemy_normal.png" id="2_o25iu"]
+[ext_resource type="Texture2D" uid="uid://dovqb3ld7wuj" path="res://textures/enemies/skull_enemy_angry.png" id="3_0o2h6"]
+[ext_resource type="PackedScene" uid="uid://cdtls42t677qv" path="res://scenes/enemies/components/nav_agent.tscn" id="4_o25iu"]
+[ext_resource type="PackedScene" uid="uid://jmqu25vi3qpw" path="res://scenes/enemies/attacks/stop_and_charge_attack.tscn" id="6_xrgtg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xrgtg"]
+
+[sub_resource type="Animation" id="Animation_0o2h6"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 2), Vector2(0, -2), Vector2(0, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_xrgtg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b5a66"]
+_data = {
+&"RESET": SubResource("Animation_xrgtg"),
+&"idle": SubResource("Animation_0o2h6")
+}
+
+[node name="SkullEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
+collision_layer = 4
+script = ExtResource("1_0o2h6")
+min_wander_path_distance = 40.0
+max_wander_path_distance = 50.0
+attack = NodePath("StopAndChargeAttack")
+
+[node name="Visuals" type="Node2D" parent="."]
+position = Vector2(0, 2)
+script = ExtResource("1_ja5cg")
+
+[node name="NormalSprite" type="Sprite2D" parent="Visuals"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("2_o25iu")
+
+[node name="AngrySprite" type="Sprite2D" parent="Visuals"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("3_0o2h6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xrgtg")
+
+[node name="NavAgent" parent="." instance=ExtResource("4_o25iu")]
+move_speed = 200.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b5a66")
+}
+autoplay = "idle"
+
+[node name="StopAndChargeAttack" parent="." node_paths=PackedStringArray("nav_agent") instance=ExtResource("6_xrgtg")]
+nav_agent = NodePath("../NavAgent")

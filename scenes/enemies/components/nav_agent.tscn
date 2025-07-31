@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdtls42t677qv"]
+
+[ext_resource type="Script" uid="uid://c4nwd3th3fyrg" path="res://scripts/enemies/nav_agent.gd" id="1_0eojx"]
+
+[node name="NavAgent" type="NavigationAgent2D" node_paths=PackedStringArray("character_body")]
+avoidance_enabled = true
+radius = 50.0
+script = ExtResource("1_0eojx")
+character_body = NodePath("")

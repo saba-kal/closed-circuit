@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3u0vuoej5wwr"
-path="res://.godot/imported/8x8_projectile.png-cace16a959c44fcd150387ec3bb77840.ctex"
+uid="uid://bvpekmek0lygw"
+path="res://.godot/imported/skull_enemy_normal.png-d3336577b4ccc09f1553cbd5502a4bb4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/8x8_projectile.png"
-dest_files=["res://.godot/imported/8x8_projectile.png-cace16a959c44fcd150387ec3bb77840.ctex"]
+source_file="res://textures/enemies/skull_enemy_normal.png"
+dest_files=["res://.godot/imported/skull_enemy_normal.png-d3336577b4ccc09f1553cbd5502a4bb4.ctex"]
 
 [params]
 

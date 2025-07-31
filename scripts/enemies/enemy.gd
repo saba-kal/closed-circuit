@@ -1,5 +1,8 @@
 class_name Enemy extends CharacterBody2D
 
+signal state_changed(new_state: State)
+signal killed()
+
 enum State
 {
 	WANDER = 0,
@@ -8,10 +11,9 @@ enum State
 
 @export var min_wander_path_distance: float = 20
 @export var max_wander_path_distance: float = 100
+@export var attack: EnemyAttack
 
-@onready var nav_agent: NavAgent = $NavigationAgent2D
-@onready var projectile_shooter: ProjectileShooter = $ProjectileShooter
-@onready var target: RandomlyRotatingTarget = $RandomlyRotatingTarget
+@onready var nav_agent: NavAgent = $NavAgent
 
 var current_state: State = State.WANDER
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -34,7 +36,7 @@ func _process(delta: float) -> void:
 
 func kill() -> void:
 	SignalBus.enemy_killed.emit(self)
-	target.queue_free()
+	killed.emit()
 	queue_free()
 
 
@@ -57,10 +59,15 @@ func on_wire_attached(node: Node2D) -> void:
 		enter_attack_state()
 
 
+func set_state(state: State) -> void:
+	current_state = state
+	state_changed.emit(current_state)
+
+
 ## ===================== Wander State =========================
 
 func enter_wander_state() -> void:
-	current_state = State.WANDER
+	set_state(State.WANDER)
 	pick_random_wander_point()
 
 
@@ -78,12 +85,12 @@ func pick_random_wander_point() -> void:
 ## ===================== Attack State =========================
 
 func enter_attack_state() -> void:
-	current_state = State.ATTACK
-	projectile_shooter.set_active(true)
+	set_state(State.ATTACK)
+	attack.set_active(true)
+	attack.init()
 
 
-func process_attack_state(delta: float) -> void:
-	nav_agent.set_movement_target(target.target.global_position)
-	projectile_shooter.shoot_direction = (player.global_position - global_position).normalized()
+func process_attack_state(_delta: float) -> void:
+	pass # nothing to do
 
 ## ==========================================================
