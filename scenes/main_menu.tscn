@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy7ivfetr20kt"]
+
+[ext_resource type="PackedScene" uid="uid://cvtuitqtyy3uv" path="res://scenes/ui/nav_button.tscn" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://y8hwvtlnyme1" path="res://scripts/ui/scene_change_button.gd" id="2_ekxnf"]
+[ext_resource type="Script" uid="uid://btxr5gst17m7e" path="res://scripts/ui/quit_button.gd" id="3_bqqt6"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -198.5
+offset_right = 198.5
+offset_bottom = 83.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Closed Circuit"
+
+[node name="NavButtons" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -279.0
+offset_top = -95.0
+offset_right = 279.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PlayButton" parent="CanvasLayer/NavButtons" instance=ExtResource("1_l6cm7")]
+layout_mode = 2
+script = ExtResource("2_ekxnf")
+
+[node name="QuitButton" parent="CanvasLayer/NavButtons" instance=ExtResource("1_l6cm7")]
+layout_mode = 2
+text = "QUIT"
+script = ExtResource("3_bqqt6")

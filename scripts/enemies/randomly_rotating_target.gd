@@ -12,7 +12,8 @@ func _ready() -> void:
 	target_rotation = rng.randf_range(0, 2 * PI)
 	await get_tree().physics_frame
 	var player: Player = get_tree().get_first_node_in_group("player")
-	reparent(player, false)
+	if is_instance_valid(player):
+		reparent(player, false)
 
 
 func _process(delta: float) -> void:

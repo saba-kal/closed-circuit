@@ -1,5 +1,7 @@
 class_name Player extends CharacterBody2D
 
+signal health_changed(new_health: int)
+
 @export var speed: float = 400
 @export var max_health: int = 3
 
@@ -18,7 +20,7 @@ func _physics_process(delta: float) -> void:
 
 func take_damage(damge: int) -> void:
 	current_health -= damge
-	print("player took damage")
+	health_changed.emit(current_health)
 	if current_health <= 0:
 		SignalBus.game_over.emit()
-		#queue_free()
+		queue_free()

@@ -36,7 +36,7 @@ func init() -> void:
 
 
 func _process(delta: float) -> void:
-	if !is_active or is_winding_up or is_charging:
+	if !is_active or is_winding_up or is_charging or !is_instance_valid(player):
 		return
 	if global_position.distance_squared_to(player.global_position) > stop_distance * stop_distance:
 		nav_agent.set_movement_target(player.global_position)

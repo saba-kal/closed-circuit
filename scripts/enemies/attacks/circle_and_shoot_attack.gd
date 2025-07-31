@@ -15,7 +15,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if is_active:
+	if is_active and is_instance_valid(player):
 		nav_agent.set_movement_target(rand_target.target.global_position)
 		projectile_shooter.shoot_direction = (player.global_position - global_position).normalized()
 

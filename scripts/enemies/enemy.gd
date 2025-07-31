@@ -23,6 +23,7 @@ var player: Player
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	SignalBus.wire_attached.connect(on_wire_attached)
+	SignalBus.game_over.connect(on_game_over)
 	enter_wander_state()
 
 
@@ -59,6 +60,10 @@ func on_wire_attached(node: Node2D) -> void:
 		enter_attack_state()
 
 
+func on_game_over() -> void:
+	enter_wander_state()
+
+
 func set_state(state: State) -> void:
 	current_state = state
 	state_changed.emit(current_state)
@@ -68,6 +73,7 @@ func set_state(state: State) -> void:
 
 func enter_wander_state() -> void:
 	set_state(State.WANDER)
+	attack.set_active(false)
 	pick_random_wander_point()
 
 
