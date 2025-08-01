@@ -6,7 +6,8 @@ signal killed()
 enum State
 {
 	WANDER = 0,
-	ATTACK = 1
+	ATTACK = 1,
+	STUNNED = 2
 }
 
 @export var min_wander_path_distance: float = 20
@@ -33,6 +34,12 @@ func _process(delta: float) -> void:
 			process_wander_state(delta)
 		State.ATTACK:
 			process_attack_state(delta)
+		State.STUNNED:
+			process_stun_state(delta)
+
+
+func stun() -> void:
+	enter_stun_state()
 
 
 func kill() -> void:
@@ -97,6 +104,19 @@ func enter_attack_state() -> void:
 
 
 func process_attack_state(_delta: float) -> void:
+	pass # nothing to do
+
+## ==========================================================
+
+## ===================== Stun State =========================
+
+func enter_stun_state() -> void:
+	set_state(State.STUNNED)
+	attack.set_active(false)
+	nav_agent.set_movement_target(global_position)
+
+
+func process_stun_state(_delta: float) -> void:
 	pass # nothing to do
 
 ## ==========================================================

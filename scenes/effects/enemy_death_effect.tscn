@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://bvb626vloysb6"]
+
+[ext_resource type="Texture2D" uid="uid://dshb8g8bvxju1" path="res://textures/1x1_white.png" id="1_cju5s"]
+
+[sub_resource type="Curve" id="Curve_v8yv0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.90814, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wtnxv"]
+curve = SubResource("Curve_v8yv0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8jhi7"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 0, 0)
+damping_min = 20.0
+damping_max = 100.0
+scale_min = 4.0
+scale_max = 4.0
+alpha_curve = SubResource("CurveTexture_wtnxv")
+
+[sub_resource type="Animation" id="Animation_cju5s"]
+resource_name = "play"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_v8yv0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wtnxv"]
+_data = {
+&"RESET": SubResource("Animation_v8yv0"),
+&"play": SubResource("Animation_cju5s")
+}
+
+[node name="EnemyDeathEffect" type="GPUParticles2D"]
+amount = 16
+texture = ExtResource("1_cju5s")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_8jhi7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wtnxv")
+}
+autoplay = "play"

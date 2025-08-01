@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c3u0vuoej5wwr" path="res://textures/projectiles/small_projectile.png" id="2_fhufk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c48wq"]
-radius = 6.08276
+radius = 8.06226
 
 [node name="BasicProjectile" type="Area2D"]
 collision_layer = 16
@@ -17,5 +17,5 @@ shape = SubResource("CircleShape2D_c48wq")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.564706, 0.231373, 0, 1)
 texture_filter = 1
-scale = Vector2(3, 3)
+scale = Vector2(4, 4)
 texture = ExtResource("2_fhufk")

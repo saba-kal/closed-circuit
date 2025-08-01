@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://f03xarhwnxb0"]
+
+[ext_resource type="Texture2D" uid="uid://b0vdyy8a8xxb1" path="res://textures/effects/lightning_effectV2.png" id="1_xsept"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0ftci"]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 9
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fhk22"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 50, 1)
+angle_min = 1.07288e-05
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = -10.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+damping_max = 50.0
+scale_min = 2.0
+scale_max = 2.0
+color = Color(1, 1, 0, 1)
+anim_speed_min = 2.0
+anim_speed_max = 2.0
+
+[node name="LightningEffect" type="GPUParticles2D"]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_0ftci")
+amount = 16
+texture = ExtResource("1_xsept")
+lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_fhk22")
