@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://c8clp8ccdf4jg"]
+[gd_scene load_steps=26 format=4 uid="uid://c8clp8ccdf4jg"]
 
 [ext_resource type="PackedScene" uid="uid://ogsrjopj7pja" path="res://scenes/player/player.tscn" id="1_ufxs0"]
 [ext_resource type="Script" uid="uid://daqrc0wubb3b2" path="res://scripts/camera/follow_cam.gd" id="2_adxub"]
@@ -20,6 +20,8 @@
 [ext_resource type="Script" uid="uid://y8hwvtlnyme1" path="res://scripts/ui/scene_change_button.gd" id="11_2sb77"]
 [ext_resource type="AudioStream" uid="uid://djdphrigvavyr" path="res://audio/sfx/electric_explosion.mp3" id="11_al56o"]
 [ext_resource type="AudioStream" uid="uid://d23v0l1dq5b0d" path="res://audio/sfx/game_over_sound.wav" id="14_ff0s2"]
+[ext_resource type="AudioStream" uid="uid://14tsa2blpwd5" path="res://audio/sfx/button_click.wav" id="17_siio1"]
+[ext_resource type="Script" uid="uid://bvp7a2v7k3ckv" path="res://scripts/audio/button_sound.gd" id="18_ndwfr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qmak7"]
 vertices = PackedVector2Array(396, -467.609, 428, -467.828, 428, -467.609, 465.023, -467.867, 465.969, 466.969, -465.023, 466.023, -465.969, -466.039, 364, -467.742, 364, -467.633, 392.477, -467.797, 396, -467.797)
@@ -191,8 +193,7 @@ layout_mode = 2
 texture = ExtResource("8_k5pu3")
 stretch_mode = 4
 
-[node name="GameOverMenu" type="Control" parent="CanvasLayer"]
-visible = false
+[node name="GameOverMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("score_tracker", "final_score_label", "save_score_button", "player_name_field", "leaderboard_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -200,44 +201,148 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_mwgft")
+score_tracker = NodePath("../ScoreTracker")
+final_score_label = NodePath("FinalScoreLabel")
+save_score_button = NodePath("Leaderboard/PlayerNameField/Button")
+player_name_field = NodePath("Leaderboard/PlayerNameField/PlayerNameEdit")
+leaderboard_text = NodePath("Leaderboard/LeaderboardTable")
 
 [node name="Title" type="Label" parent="CanvasLayer/GameOverMenu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -129.0
-offset_top = 100.0
-offset_right = 129.0
-offset_bottom = 202.0
+offset_left = -162.0
+offset_top = 3.0
+offset_right = 163.0
+offset_bottom = 86.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
 text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NavButtons" type="VBoxContainer" parent="CanvasLayer/GameOverMenu"]
+[node name="FinalScoreLabel" type="Label" parent="CanvasLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -117.5
+offset_top = 73.0
+offset_right = 117.5
+offset_bottom = 109.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 26
+text = "FINAL SCORE: 1000"
+horizontal_alignment = 1
+
+[node name="Leaderboard" type="Panel" parent="CanvasLayer/GameOverMenu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -75.0
-offset_top = -120.0
-offset_right = 75.0
-offset_bottom = 120.0
+offset_left = -212.0
+offset_top = -241.0
+offset_right = 212.0
+offset_bottom = 259.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="PlayerNameField" type="Control" parent="CanvasLayer/GameOverMenu/Leaderboard"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -123.0
+offset_top = -68.0
+offset_right = 123.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PlayerNameEdit" type="LineEdit" parent="CanvasLayer/GameOverMenu/Leaderboard/PlayerNameField"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -21.0
+offset_right = 166.0
+offset_bottom = 23.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+placeholder_text = "Enter name"
+max_length = 10
+
+[node name="Button" type="Button" parent="CanvasLayer/GameOverMenu/Leaderboard/PlayerNameField"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -22.0
+offset_bottom = 22.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "SAVE"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/GameOverMenu/Leaderboard/PlayerNameField/Button"]
+stream = ExtResource("17_siio1")
+script = ExtResource("18_ndwfr")
+
+[node name="LeaderboardTable" type="RichTextLabel" parent="CanvasLayer/GameOverMenu/Leaderboard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -87.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 26
+bbcode_enabled = true
+text = "1. Player
+2. Player
+3. Player
+4. Player
+5. Player
+6. Player
+7. Player
+8. Player
+9. Player
+10. Player"
+
+[node name="InputFields" type="HBoxContainer" parent="CanvasLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -213.0
+offset_top = -86.0
+offset_right = 213.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="RetryButton" parent="CanvasLayer/GameOverMenu/NavButtons" instance=ExtResource("10_5fr2l")]
+[node name="RetryButton" parent="CanvasLayer/GameOverMenu/InputFields" instance=ExtResource("10_5fr2l")]
 layout_mode = 2
 text = "RETRY"
 script = ExtResource("11_2sb77")
 
-[node name="MainMenuButton" parent="CanvasLayer/GameOverMenu/NavButtons" instance=ExtResource("10_5fr2l")]
+[node name="MainMenuButton" parent="CanvasLayer/GameOverMenu/InputFields" instance=ExtResource("10_5fr2l")]
 layout_mode = 2
 text = "MAIN MENU"
 script = ExtResource("11_2sb77")

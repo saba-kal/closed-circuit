@@ -20,12 +20,19 @@ config/icon="res://icon.svg"
 SignalBus="*res://scripts/common/signal_bus.gd"
 SceneHandler="*res://scripts/common/scene_handler.gd"
 AudioManager="*res://scenes/audio/audio_manager.tscn"
+SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"
+ConfigureSilentWolf="res://scripts/config/configure_silent_wolf.gd"
+PlayerData="*res://scripts/player/player_data.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/resizable=false
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/silent_wolf/plugin.cfg")
 
 [global_group]
 
