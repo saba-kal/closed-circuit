@@ -14,20 +14,20 @@ particle_flag_disable_z = true
 emission_shape = 6
 emission_ring_axis = Vector3(0, 0, 1)
 emission_ring_height = 1.0
-emission_ring_radius = 64.0
-emission_ring_inner_radius = 60.0
+emission_ring_radius = 100.0
+emission_ring_inner_radius = 80.0
 emission_ring_cone_angle = 90.0
-radial_velocity_min = -200.0
-radial_velocity_max = -150.0
+radial_velocity_min = -300.0
+radial_velocity_max = -200.0
 gravity = Vector3(0, 0, 0)
 scale_min = 4.0
 scale_max = 4.0
-color = Color(0.780392, 0, 0, 1)
+color = Color(2, 0, 0, 1)
 alpha_curve = SubResource("CurveTexture_dj6so")
 
 [node name="AttackChargeEffect" type="GPUParticles2D"]
 z_index = -1
 texture = ExtResource("1_v5x1l")
-lifetime = 0.5
+lifetime = 0.3
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_ertcp")

@@ -1,10 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvtuitqtyy3uv"]
+[gd_scene load_steps=6 format=3 uid="uid://cvtuitqtyy3uv"]
 
+[ext_resource type="FontFile" uid="uid://q47mlpirt62u" path="res://fonts/8bitOperatorPlus8-Regular.ttf" id="1_85gte"]
 [ext_resource type="Script" uid="uid://bvp7a2v7k3ckv" path="res://scripts/audio/button_sound.gd" id="2_85gte"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_it1p7"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 0.494118, 0.172549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmp26"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.627289, 0.274595, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lyeu2"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.780258, 0.348489, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
 [node name="NavButton" type="Button"]
+texture_filter = 1
 custom_minimum_size = Vector2(150, 0)
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("1_85gte")
+theme_override_font_sizes/font_size = 46
+theme_override_styles/hover = SubResource("StyleBoxFlat_it1p7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tmp26")
+theme_override_styles/normal = SubResource("StyleBoxFlat_lyeu2")
 text = "PLAY"
 
 [node name="ButtonSound" type="Node" parent="."]

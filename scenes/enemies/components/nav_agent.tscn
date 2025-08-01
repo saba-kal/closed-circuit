@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c4nwd3th3fyrg" path="res://scripts/enemies/nav_agent.gd" id="1_0eojx"]
 
-[node name="NavAgent" type="NavigationAgent2D" node_paths=PackedStringArray("character_body")]
-avoidance_enabled = true
+[node name="NavAgent" type="NavigationAgent2D"]
 radius = 50.0
 script = ExtResource("1_0eojx")
-character_body = NodePath("")

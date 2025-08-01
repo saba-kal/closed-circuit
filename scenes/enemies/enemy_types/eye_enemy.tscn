@@ -52,7 +52,6 @@ _data = {
 
 [node name="EyeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
 collision_layer = 4
-collision_mask = 5
 script = ExtResource("1_d5kdv")
 attack = NodePath("StopAndShootAttack")
 wander_speed = 150.0

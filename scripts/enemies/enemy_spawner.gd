@@ -7,10 +7,13 @@ extends Node2D
 		if Engine.is_editor_hint():
 			queue_redraw()
 @export var possible_enemies: Array[PackedScene]
-@export var time_between_spawns: float = 5
+@export var time_between_spawns: float = 2
+@export var enemies_per_spawn: int = 5
+@export var max_enemies: int = 200
 
 var spawning_enabled: bool = false
 var time_since_last_spawn: float = 0
+var enemy_count: int = 0
 
 
 func _ready() -> void:
@@ -18,13 +21,14 @@ func _ready() -> void:
 		return
 	SignalBus.enemy_killed.connect(on_enemy_killed)
 	SignalBus.game_over.connect(on_game_over)
+	enemy_count = get_child_count()
 
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint() or !spawning_enabled:
 		return
 
-	if time_since_last_spawn >= time_between_spawns:
+	if time_since_last_spawn >= time_between_spawns and enemy_count < max_enemies:
 		spawn_random_enemies()
 		time_since_last_spawn = 0
 	time_since_last_spawn += delta
@@ -34,6 +38,7 @@ func on_enemy_killed(_enemy: Enemy) -> void:
 	# We only need to know when the first enemy is killed so that we can start spawning.
 	SignalBus.enemy_killed.disconnect(on_enemy_killed)
 	spawning_enabled = true
+	enemy_count -= 1
 
 
 func on_game_over() -> void:
@@ -47,9 +52,12 @@ func _draw():
 
 func spawn_random_enemies() -> void:
 	var rng := RandomNumberGenerator.new()
-	var randi: int = rng.randi_range(0, len(possible_enemies) - 1)
-	var enemy = possible_enemies[randi].instantiate()
-	add_child(enemy)
-	var x: int = rng.randi_range(spawn_box.position.x, spawn_box.position.x + spawn_box.size.x)
-	var y: int = rng.randi_range(spawn_box.position.y, spawn_box.position.y + spawn_box.size.y)
-	enemy.global_position =  global_position + Vector2(x,y)
+	for i in range(enemies_per_spawn):
+		var randi: int = rng.randi_range(0, len(possible_enemies) - 1)
+		var enemy = possible_enemies[randi].instantiate()
+		add_child(enemy)
+		var x: int = rng.randi_range(spawn_box.position.x, spawn_box.position.x + spawn_box.size.x)
+		var y: int = rng.randi_range(spawn_box.position.y, spawn_box.position.y + spawn_box.size.y)
+		enemy.global_position =  global_position + Vector2(x,y)
+		print("Spawning enemy at " + str(enemy.global_position))
+		enemy_count += 1

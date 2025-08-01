@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cy7ivfetr20kt"]
+[gd_scene load_steps=7 format=3 uid="uid://cy7ivfetr20kt"]
 
 [ext_resource type="PackedScene" uid="uid://cvtuitqtyy3uv" path="res://scenes/ui/nav_button.tscn" id="1_l6cm7"]
+[ext_resource type="LabelSettings" uid="uid://disjveqdkjcnr" path="res://fonts/title_label_settings.tres" id="1_rtw2f"]
 [ext_resource type="Script" uid="uid://y8hwvtlnyme1" path="res://scripts/ui/scene_change_button.gd" id="2_ekxnf"]
 [ext_resource type="Script" uid="uid://btxr5gst17m7e" path="res://scripts/ui/quit_button.gd" id="3_bqqt6"]
 [ext_resource type="Script" uid="uid://qkp5573g2xg5" path="res://scripts/ui/volume_slider.gd" id="4_8ln24"]
@@ -14,12 +15,14 @@
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -198.5
-offset_right = 198.5
-offset_bottom = 83.0
+offset_left = -263.0
+offset_right = 264.0
+offset_bottom = 136.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
 text = "Closed Circuit"
+label_settings = ExtResource("1_rtw2f")
+vertical_alignment = 1
 
 [node name="NavButtons" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 7
@@ -60,6 +63,7 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="HSlider" type="HSlider" parent="CanvasLayer/SoundSetting"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0

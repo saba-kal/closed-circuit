@@ -38,6 +38,8 @@ func fire_projectile() -> void:
 	attack_charge_effect.emitting = true
 	timer.start(charge_time)
 	await timer.timeout
+	if !is_instance_valid(player):
+		return
 	projectile_shooter.shoot_direction = (player.global_position - global_position).normalized()
 	projectile_shooter.shoot_immediately()
 	attack_charge_effect.emitting = false
