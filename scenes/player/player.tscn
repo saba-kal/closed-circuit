@@ -39,12 +39,13 @@ stream = ExtResource("4_p47bc")
 volume_db = -5.0
 
 [node name="WireLine2D" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.443137)
 top_level = true
 z_index = -1
 texture_filter = 1
 texture_repeat = 2
 points = PackedVector2Array(-67, 37, 0, 0, -100, -62)
-width = 32.0
+width = 16.0
 texture = ExtResource("5_75vfm")
 texture_mode = 1
 antialiased = true

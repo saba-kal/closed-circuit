@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://880mrxqxi1pt"]
+[gd_scene load_steps=3 format=3 uid="uid://880mrxqxi1pt"]
 
 [ext_resource type="Script" uid="uid://md8e2yuvi6m0" path="res://scripts/enemies/attacks/stop_and_shoot_attack.gd" id="1_d33x7"]
+[ext_resource type="PackedScene" uid="uid://ddrcva8of1do1" path="res://scenes/effects/attack_charge_effect.tscn" id="2_fipb1"]
 
 [node name="StopAndShootAttack" type="Node2D"]
 script = ExtResource("1_d33x7")
+
+[node name="AttackChargeEffect" parent="." instance=ExtResource("2_fipb1")]

@@ -13,6 +13,7 @@ collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_8e3ao")
 attack = NodePath("CircleAndShootAttack")
+wander_speed = 80.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_6we3w")
@@ -25,6 +26,7 @@ texture = ExtResource("1_6xk8f")
 [node name="NavAgent" parent="." instance=ExtResource("3_mwu22")]
 
 [node name="ProjectileShooter" parent="." instance=ExtResource("4_t0jp1")]
+time_between_shots = 3.0
 
 [node name="CircleAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("6_6taoi")]
 nav_agent = NodePath("../NavAgent")

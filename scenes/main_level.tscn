@@ -276,7 +276,7 @@ offset_bottom = 23.0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 26
 placeholder_text = "Enter name"
-max_length = 10
+max_length = 9
 
 [node name="Button" type="Button" parent="CanvasLayer/GameOverMenu/Leaderboard/PlayerNameField"]
 layout_mode = 1

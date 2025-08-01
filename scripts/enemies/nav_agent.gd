@@ -1,14 +1,11 @@
 class_name NavAgent extends NavigationAgent2D
 
-@export var move_speed: float = 100
-
 var character_body: CharacterBody2D
 
 
 func _ready() -> void:
 	character_body = get_parent()
 	velocity_computed.connect(on_velocity_computed)
-	max_speed = move_speed
 
 
 func _physics_process(delta: float) -> void:
@@ -16,7 +13,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var next_path_position: Vector2 = get_next_path_position()
 	var current_agent_position: Vector2 = character_body.global_position
-	var new_velocity: Vector2 = (next_path_position - current_agent_position).normalized() * move_speed
+	var new_velocity: Vector2 = (next_path_position - current_agent_position).normalized() * max_speed
 	if avoidance_enabled:
 		set_velocity(new_velocity)
 	else:

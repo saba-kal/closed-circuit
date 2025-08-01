@@ -1,17 +1,20 @@
 extends EnemyAttack
 
 @export var stop_distance: float = 150
-@export var charge_time: float = 1
+@export var charge_time: float = 0.5
+@export var time_between_shots: float = 1.0
 @export var nav_agent: NavAgent
 @export var projectile_shooter: ProjectileShooter
 
 var player: Player
 var is_firing_projectile: bool
-var timer: Timer
+var time_since_last_shot: float = 0
+var timer: Timer = Timer.new()
+
 
 func _ready() -> void:
+	super._ready()
 	player = get_tree().get_first_node_in_group("player")
-	timer = Timer.new()
 	timer.one_shot = true
 	add_child(timer)
 
@@ -24,15 +27,18 @@ func _process(delta: float) -> void:
 		nav_agent.set_movement_target(player.global_position)
 	else:
 		nav_agent.set_movement_target(global_position)
-		fire_projectile()
+		if time_since_last_shot >= time_between_shots:
+			fire_projectile()
+			time_since_last_shot = 0
+	time_since_last_shot += delta
 
 
 func fire_projectile() -> void:
 	is_firing_projectile = true
+	attack_charge_effect.emitting = true
 	timer.start(charge_time)
 	await timer.timeout
-	if !is_instance_valid(player):
-		return
 	projectile_shooter.shoot_direction = (player.global_position - global_position).normalized()
-	projectile_shooter.shoot()
+	projectile_shooter.shoot_immediately()
+	attack_charge_effect.emitting = false
 	is_firing_projectile = false

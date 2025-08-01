@@ -9,7 +9,10 @@ var player: Player
 
 
 func _ready() -> void:
+	super._ready()
 	player = get_tree().get_first_node_in_group("player")
+	projectile_shooter.preparing_to_fire.connect(on_preparing_to_fire)
+	projectile_shooter.projectile_fired.connect(on_projectile_fired)
 	var enemy: Enemy = get_parent()
 	enemy.killed.connect(on_enemy_killed)
 
@@ -24,6 +27,13 @@ func set_active(active: bool) -> void:
 	super.set_active(active)
 	projectile_shooter.set_active(active)
 
+
+func on_preparing_to_fire() -> void:
+	attack_charge_effect.emitting = true
+
+
+func on_projectile_fired() -> void:
+	attack_charge_effect.emitting = false
 
 
 func on_enemy_killed() -> void:

@@ -13,6 +13,8 @@ enum State
 @export var min_wander_path_distance: float = 20
 @export var max_wander_path_distance: float = 100
 @export var attack: EnemyAttack
+@export var wander_speed: float = 100
+@export var attack_speed: float = 100
 
 @onready var nav_agent: NavAgent = $NavAgent
 
@@ -82,6 +84,7 @@ func enter_wander_state() -> void:
 	set_state(State.WANDER)
 	attack.set_active(false)
 	pick_random_wander_point()
+	nav_agent.max_speed = wander_speed
 
 
 func process_wander_state(delta: float) -> void:
@@ -101,6 +104,7 @@ func enter_attack_state() -> void:
 	set_state(State.ATTACK)
 	attack.set_active(true)
 	attack.init()
+	nav_agent.max_speed = attack_speed
 
 
 func process_attack_state(_delta: float) -> void:

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6kh2lk3igjic"]
+[gd_scene load_steps=5 format=3 uid="uid://c6kh2lk3igjic"]
 
 [ext_resource type="Script" uid="uid://bep803dq4m678" path="res://scripts/enemies/attacks/circle_and_shoot_attack.gd" id="1_6qgya"]
 [ext_resource type="Script" uid="uid://ctsnktrs0nfoi" path="res://scripts/enemies/randomly_rotating_target.gd" id="2_dlhlj"]
 [ext_resource type="Texture2D" uid="uid://c3u0vuoej5wwr" path="res://textures/projectiles/small_projectile.png" id="3_v848k"]
+[ext_resource type="PackedScene" uid="uid://ddrcva8of1do1" path="res://scenes/effects/attack_charge_effect.tscn" id="4_dlhlj"]
 
 [node name="CircleAndShootAttack" type="Node2D"]
 script = ExtResource("1_6qgya")
@@ -18,3 +19,5 @@ position = Vector2(111, 0)
 visible = false
 texture_filter = 1
 texture = ExtResource("3_v848k")
+
+[node name="AttackChargeEffect" parent="." instance=ExtResource("4_dlhlj")]

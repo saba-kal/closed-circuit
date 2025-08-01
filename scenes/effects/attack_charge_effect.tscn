@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddrcva8of1do1"]
+
+[ext_resource type="Texture2D" uid="uid://dshb8g8bvxju1" path="res://textures/1x1_white.png" id="1_v5x1l"]
+
+[sub_resource type="Curve" id="Curve_lsfns"]
+_data = [Vector2(0, 0), 0.0, 3.36652, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dj6so"]
+curve = SubResource("Curve_lsfns")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ertcp"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 64.0
+emission_ring_inner_radius = 60.0
+emission_ring_cone_angle = 90.0
+radial_velocity_min = -200.0
+radial_velocity_max = -150.0
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 4.0
+color = Color(0.780392, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_dj6so")
+
+[node name="AttackChargeEffect" type="GPUParticles2D"]
+z_index = -1
+texture = ExtResource("1_v5x1l")
+lifetime = 0.5
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ertcp")

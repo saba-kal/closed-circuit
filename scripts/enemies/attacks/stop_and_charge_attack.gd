@@ -6,8 +6,10 @@ extends EnemyAttack
 @export var charge_speed: float = 800
 @export var damage: int = 1
 @export var nav_agent: NavAgent
+@export var charge_visuals: Node2D
 
 @onready var area: Area2D = $Area2D
+@onready var audio_stream_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var player: Player
 var enemy: Enemy
@@ -19,6 +21,8 @@ var direction: Vector2
 
 
 func _ready() -> void:
+	super._ready()
+	charge_visuals.visible = false
 	area.body_entered.connect(on_body_entered)
 	player = get_tree().get_first_node_in_group("player")
 	enemy = get_parent()
@@ -52,20 +56,26 @@ func _physics_process(delta: float) -> void:
 	if collision:
 		is_charging = false
 		charge_timer.stop()
+		charge_visuals.visible = false
 
 
 func charge() -> void:
 	is_winding_up = true
+	attack_charge_effect.emitting = true
 	windup_timer.start(windup_time)
 	await windup_timer.timeout
 	is_winding_up = false
+	attack_charge_effect.emitting = false
 	if !is_instance_valid(player):
 		return
 	is_charging = true
+	audio_stream_player.play()
+	charge_visuals.visible = true
 	direction = (player.global_position - global_position).normalized()
 	charge_timer.start(charge_time)
 	await charge_timer.timeout
 	is_charging = false
+	charge_visuals.visible = false
 
 
 func on_body_entered(body: Node2D) -> void:

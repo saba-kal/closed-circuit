@@ -55,6 +55,8 @@ collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_d5kdv")
 attack = NodePath("StopAndShootAttack")
+wander_speed = 150.0
+attack_speed = 250.0
 
 [node name="Visuals" type="Node2D" parent="."]
 script = ExtResource("2_kh6ds")
@@ -73,11 +75,10 @@ texture = ExtResource("2_urq1n")
 shape = SubResource("CircleShape2D_urq1n")
 
 [node name="NavAgent" parent="." instance=ExtResource("4_ub1oo")]
-move_speed = 150.0
 
 [node name="ProjectileShooter" parent="." instance=ExtResource("6_exlc2")]
 projectile_scene = ExtResource("7_q6sr1")
-projectile_speed = 400.0
+projectile_speed = 600.0
 projectile_count = 1
 
 [node name="StopAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("7_exlc2")]
