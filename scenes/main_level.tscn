@@ -1,15 +1,15 @@
-[gd_scene load_steps=42 format=4 uid="uid://c8clp8ccdf4jg"]
+[gd_scene load_steps=45 format=4 uid="uid://c8clp8ccdf4jg"]
 
 [ext_resource type="Shader" uid="uid://cehi66nofn478" path="res://shaders/starry_background.gdshader" id="1_cssx7"]
 [ext_resource type="PackedScene" uid="uid://ogsrjopj7pja" path="res://scenes/player/player.tscn" id="1_ufxs0"]
 [ext_resource type="Texture2D" uid="uid://dshb8g8bvxju1" path="res://textures/1x1_white.png" id="2_1irq3"]
 [ext_resource type="Script" uid="uid://daqrc0wubb3b2" path="res://scripts/camera/follow_cam.gd" id="2_adxub"]
 [ext_resource type="Texture2D" uid="uid://dynylugvivfg3" path="res://textures/map/tilemap.png" id="2_ndwfr"]
-[ext_resource type="PackedScene" uid="uid://cnqext3yo65b8" path="res://scenes/enemies/enemy_types/slime_enemy.tscn" id="2_ufxs0"]
+[ext_resource type="PackedScene" uid="uid://cnqext3yo65b8" path="res://scenes/enemies/enemy_types/easy_slime_enemy.tscn" id="2_ufxs0"]
 [ext_resource type="Script" uid="uid://b2bwk5dotd3t2" path="res://scripts/game/score_tracker.gd" id="3_6we3w"]
 [ext_resource type="Script" uid="uid://bo1pmux866nhq" path="res://scripts/enemies/enemy_spawner.gd" id="3_u2c82"]
-[ext_resource type="PackedScene" uid="uid://ddtjpw0vqdosp" path="res://scenes/enemies/enemy_types/eye_enemy.tscn" id="5_8ra5a"]
-[ext_resource type="PackedScene" uid="uid://bs2cykno05bgw" path="res://scenes/enemies/enemy_types/skull_enemy.tscn" id="6_bq26l"]
+[ext_resource type="PackedScene" uid="uid://ddtjpw0vqdosp" path="res://scenes/enemies/enemy_types/easy_eye_enemy.tscn" id="5_8ra5a"]
+[ext_resource type="PackedScene" uid="uid://bs2cykno05bgw" path="res://scenes/enemies/enemy_types/easy_skull_enemy.tscn" id="6_bq26l"]
 [ext_resource type="Script" uid="uid://c15ofh1kkkjbu" path="res://scripts/ui/player_health_bar.gd" id="8_iqu8w"]
 [ext_resource type="Texture2D" uid="uid://dkuwbgmrkqnmk" path="res://textures/ui/heart_16x16.png" id="8_k5pu3"]
 [ext_resource type="Script" uid="uid://lc22rod8waw3" path="res://scripts/effects/electricity_effect_spawner.gd" id="8_uk2yf"]
@@ -27,6 +27,9 @@
 [ext_resource type="LabelSettings" uid="uid://dxxi81sgvkvrr" path="res://fonts/default_label_settings.tres" id="18_nc5r2"]
 [ext_resource type="Script" uid="uid://bvp7a2v7k3ckv" path="res://scripts/audio/button_sound.gd" id="18_ndwfr"]
 [ext_resource type="FontFile" uid="uid://q47mlpirt62u" path="res://fonts/8bitOperatorPlus8-Regular.ttf" id="19_sjhni"]
+[ext_resource type="PackedScene" uid="uid://bkhpfusmhrdg3" path="res://scenes/enemies/enemy_types/hard_slime_enemy.tscn" id="28_1irq3"]
+[ext_resource type="PackedScene" uid="uid://qxrcmvtwyxt3" path="res://scenes/enemies/enemy_types/hard_eye_enemy.tscn" id="29_iycfq"]
+[ext_resource type="PackedScene" uid="uid://b5aawhcs55f0v" path="res://scenes/enemies/enemy_types/hard_skull_enemy.tscn" id="30_rcrbw"]
 
 [sub_resource type="Environment" id="Environment_ndwfr"]
 background_mode = 3
@@ -173,6 +176,8 @@ script = ExtResource("3_u2c82")
 spawn_box = Rect2(-1400, -1400, 2800, 2800)
 possible_enemies = Array[PackedScene]([ExtResource("5_8ra5a"), ExtResource("6_bq26l"), ExtResource("2_ufxs0")])
 time_between_spawns = 5.0
+enemies_per_spawn = 5
+max_enemies = 200
 
 [node name="Enemy" parent="EnemySpawner" instance=ExtResource("2_ufxs0")]
 position = Vector2(-39, -151)
@@ -215,6 +220,7 @@ script = ExtResource("3_6we3w")
 score_label = NodePath("ScoreLabel")
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer/ScoreTracker"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -494,3 +500,12 @@ text = "RESUME"
 [node name="MainMenuButton" parent="CanvasLayer/PauseMenu/NavButtons" instance=ExtResource("10_5fr2l")]
 layout_mode = 2
 text = "MAIN MENU"
+
+[node name="SlimeEnemy" parent="." instance=ExtResource("28_1irq3")]
+position = Vector2(-256, -136)
+
+[node name="HardEyeEnemy" parent="." instance=ExtResource("29_iycfq")]
+position = Vector2(160, -160)
+
+[node name="SkullEnemy" parent="." instance=ExtResource("30_rcrbw")]
+position = Vector2(-408, -56)

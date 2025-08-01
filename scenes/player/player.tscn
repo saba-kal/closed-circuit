@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ogsrjopj7pja"]
+[gd_scene load_steps=17 format=3 uid="uid://ogsrjopj7pja"]
 
 [ext_resource type="Script" uid="uid://bop1yg7ic4bcb" path="res://scripts/player/player.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://cchedgol22i7y" path="res://textures/player/player_sprite.png" id="2_75vfm"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c5xnw5bxaln3e" path="res://audio/sfx/player_hit.wav" id="4_lvxji"]
 [ext_resource type="AudioStream" uid="uid://hoshkco80vio" path="res://audio/sfx/wire_attached_sound.wav" id="4_p47bc"]
 [ext_resource type="Texture2D" uid="uid://bvwiihlufnhr1" path="res://textures/wire/wire_texture.png" id="5_75vfm"]
+[ext_resource type="Texture2D" uid="uid://bjbvms3plho0r" path="res://textures/effects/target_indicator.png" id="8_qek5x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0owmy"]
 size = Vector2(16, 28)
@@ -79,11 +80,12 @@ animation = &"idle"
 autoplay = "idle"
 script = ExtResource("3_0owmy")
 
-[node name="WireAttacher" type="Area2D" parent="." node_paths=PackedStringArray("wire_line")]
+[node name="WireAttacher" type="Area2D" parent="." node_paths=PackedStringArray("wire_line", "target_indicator")]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("3_gmlin")
 wire_line = NodePath("../WireLine2D")
+target_indicator = NodePath("../TargetIndicator")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WireAttacher"]
 shape = SubResource("CircleShape2D_dovo2")
@@ -105,3 +107,11 @@ antialiased = true
 
 [node name="PlayerHitSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_lvxji")
+
+[node name="TargetIndicator" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 0.545098)
+z_index = -1
+texture_filter = 1
+position = Vector2(41, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("8_qek5x")

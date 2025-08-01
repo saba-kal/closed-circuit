@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3 uid="uid://qxrcmvtwyxt3"]
+
+[ext_resource type="Script" uid="uid://btkuxu2cve4eu" path="res://scripts/enemies/enemy.gd" id="1_lglxn"]
+[ext_resource type="Script" uid="uid://dr3l56feccix2" path="res://scripts/enemies/enemy_sprite_changer.gd" id="2_vbe6o"]
+[ext_resource type="Texture2D" uid="uid://eudhtumh5nxf" path="res://textures/enemies/hard_eye_enemy_normal.png" id="3_lglxn"]
+[ext_resource type="Texture2D" uid="uid://fxnmjvsvhglu" path="res://textures/enemies/hard_eye_enemy_angry.png" id="4_vbe6o"]
+[ext_resource type="PackedScene" uid="uid://cdtls42t677qv" path="res://scenes/enemies/components/nav_agent.tscn" id="5_22dx3"]
+[ext_resource type="PackedScene" uid="uid://bgsme7imgf84u" path="res://scenes/enemies/components/projectile_shooter.tscn" id="6_vusgg"]
+[ext_resource type="PackedScene" uid="uid://c1ym4o8d3dw8x" path="res://scenes/projectiles/medium_projectile.tscn" id="7_u25gg"]
+[ext_resource type="PackedScene" uid="uid://880mrxqxi1pt" path="res://scenes/enemies/attacks/stop_and_shoot_attack.tscn" id="8_7bsgl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_urq1n"]
+radius = 19.0263
+
+[sub_resource type="Animation" id="Animation_2xqtk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_81x45"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 3), Vector2(0, -3), Vector2(0, 3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0fwfo"]
+_data = {
+&"RESET": SubResource("Animation_2xqtk"),
+&"idle": SubResource("Animation_81x45")
+}
+
+[node name="HardEyeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
+collision_layer = 4
+script = ExtResource("1_lglxn")
+attack = NodePath("StopAndShootAttack")
+wander_speed = 150.0
+attack_speed = 250.0
+
+[node name="Visuals" type="Node2D" parent="."]
+script = ExtResource("2_vbe6o")
+
+[node name="NormalSprite" type="Sprite2D" parent="Visuals"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("3_lglxn")
+
+[node name="AngrySprite" type="Sprite2D" parent="Visuals"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("4_vbe6o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_urq1n")
+
+[node name="NavAgent" parent="." instance=ExtResource("5_22dx3")]
+
+[node name="ProjectileShooter" parent="." instance=ExtResource("6_vusgg")]
+projectile_scene = ExtResource("7_u25gg")
+projectile_speed = 600.0
+angle_between_projectiles = 10.0
+
+[node name="StopAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("8_7bsgl")]
+stop_distance = 200.0
+nav_agent = NodePath("../NavAgent")
+projectile_shooter = NodePath("../ProjectileShooter")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0fwfo")
+}
+autoplay = "idle"

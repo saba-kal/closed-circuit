@@ -50,7 +50,7 @@ _data = {
 &"idle": SubResource("Animation_81x45")
 }
 
-[node name="EyeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
+[node name="EasyEyeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
 collision_layer = 4
 script = ExtResource("1_d5kdv")
 attack = NodePath("StopAndShootAttack")
@@ -77,10 +77,12 @@ shape = SubResource("CircleShape2D_urq1n")
 
 [node name="ProjectileShooter" parent="." instance=ExtResource("6_exlc2")]
 projectile_scene = ExtResource("7_q6sr1")
-projectile_speed = 600.0
+projectile_speed = 400.0
 projectile_count = 1
 
 [node name="StopAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("7_exlc2")]
+stop_time = 3.0
+time_between_shots = 3.0
 nav_agent = NodePath("../NavAgent")
 projectile_shooter = NodePath("../ProjectileShooter")
 

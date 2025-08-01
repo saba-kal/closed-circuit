@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://jmqu25vi3qpw"]
+[gd_scene load_steps=7 format=3 uid="uid://jmqu25vi3qpw"]
 
 [ext_resource type="Script" uid="uid://b7v0arotu4djf" path="res://scripts/enemies/attacks/stop_and_charge_attack.gd" id="1_mlu5o"]
 [ext_resource type="PackedScene" uid="uid://ddrcva8of1do1" path="res://scenes/effects/attack_charge_effect.tscn" id="2_1m1rr"]
 [ext_resource type="AudioStream" uid="uid://brk3yryfi3piv" path="res://audio/sfx/charge_attack.mp3" id="3_wf7ws"]
+[ext_resource type="Script" uid="uid://ctsnktrs0nfoi" path="res://scripts/enemies/randomly_rotating_target.gd" id="4_sn4x1"]
+[ext_resource type="Texture2D" uid="uid://c3u0vuoej5wwr" path="res://textures/projectiles/small_projectile.png" id="5_b1bbx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mlu5o"]
 
@@ -21,3 +23,15 @@ shape = SubResource("CircleShape2D_mlu5o")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_wf7ws")
 volume_db = -5.0
+
+[node name="RandomlyRotatingTarget" type="Node2D" parent="."]
+script = ExtResource("4_sn4x1")
+metadata/_custom_type_script = "uid://ctsnktrs0nfoi"
+
+[node name="Marker2D" type="Marker2D" parent="RandomlyRotatingTarget"]
+position = Vector2(111, 0)
+
+[node name="DebugSprite" type="Sprite2D" parent="RandomlyRotatingTarget/Marker2D"]
+visible = false
+texture_filter = 1
+texture = ExtResource("5_b1bbx")

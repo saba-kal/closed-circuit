@@ -7,9 +7,9 @@ extends Node2D
 		if Engine.is_editor_hint():
 			queue_redraw()
 @export var possible_enemies: Array[PackedScene]
-@export var time_between_spawns: float = 2
-@export var enemies_per_spawn: int = 5
-@export var max_enemies: int = 200
+@export var time_between_spawns: float = 1
+@export var enemies_per_spawn: int = 2
+@export var max_enemies: int = 50
 
 var spawning_enabled: bool = false
 var time_since_last_spawn: float = 0
@@ -59,5 +59,4 @@ func spawn_random_enemies() -> void:
 		var x: int = rng.randi_range(spawn_box.position.x, spawn_box.position.x + spawn_box.size.x)
 		var y: int = rng.randi_range(spawn_box.position.y, spawn_box.position.y + spawn_box.size.y)
 		enemy.global_position =  global_position + Vector2(x,y)
-		print("Spawning enemy at " + str(enemy.global_position))
 		enemy_count += 1

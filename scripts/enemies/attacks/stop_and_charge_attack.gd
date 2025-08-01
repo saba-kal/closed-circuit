@@ -1,6 +1,13 @@
 extends EnemyAttack
 
+enum State {
+	CHASING = 0,
+	WINDUP = 1,
+	CHARGING = 2
+}
+
 @export var stop_distance: float = 150
+@export var time_between_charges: float = 1.0
 @export var windup_time: float = 1.0
 @export var charge_time: float = 0.5
 @export var charge_speed: float = 800
@@ -10,14 +17,13 @@ extends EnemyAttack
 
 @onready var area: Area2D = $Area2D
 @onready var audio_stream_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var rand_target: RandomlyRotatingTarget = $RandomlyRotatingTarget
 
 var player: Player
 var enemy: Enemy
-var is_winding_up: bool
-var is_charging: bool
-var windup_timer: Timer
-var charge_timer: Timer
 var direction: Vector2
+var current_state: State = State.CHASING
+var time_in_state: float = 0
 
 
 func _ready() -> void:
@@ -26,58 +32,47 @@ func _ready() -> void:
 	area.body_entered.connect(on_body_entered)
 	player = get_tree().get_first_node_in_group("player")
 	enemy = get_parent()
-	windup_timer = Timer.new()
-	windup_timer.one_shot = true
-	add_child(windup_timer)
-	charge_timer = Timer.new()
-	charge_timer.one_shot = true
-	add_child(charge_timer)
-
-
-func init() -> void:
-	is_winding_up = false
-	is_charging = false
-
-
-func _process(delta: float) -> void:
-	if !is_active or is_winding_up or is_charging or !is_instance_valid(player):
-		return
-	if global_position.distance_squared_to(player.global_position) > stop_distance * stop_distance:
-		nav_agent.set_movement_target(player.global_position)
-	else:
-		nav_agent.set_movement_target(global_position)
-		charge()
+	enemy.killed.connect(on_enemy_killed)
 
 
 func _physics_process(delta: float) -> void:
-	if !is_active or !is_charging:
+	if !is_active or !is_instance_valid(player):
 		return
-	var collision = enemy.move_and_collide(direction * charge_speed * delta)
-	if collision:
-		is_charging = false
-		charge_timer.stop()
-		charge_visuals.visible = false
+
+	match current_state:
+		State.CHASING:
+			nav_agent.set_movement_target(rand_target.target.global_position)
+			if time_in_state >= time_between_charges and target_reached():
+				change_state(State.WINDUP)
+		State.WINDUP:
+			nav_agent.set_movement_target(global_position)
+			attack_charge_effect.emitting = true
+			if time_in_state >= windup_time:
+				change_state(State.CHARGING)
+				attack_charge_effect.emitting = false
+				direction = (player.global_position - global_position).normalized()
+		State.CHARGING:
+			charge_visuals.visible = true
+			var collision = enemy.move_and_collide(direction * charge_speed * delta)
+			if collision or time_in_state >= charge_time:
+				change_state(State.CHASING)
+				charge_visuals.visible = false
+	time_in_state += delta
 
 
-func charge() -> void:
-	is_winding_up = true
-	attack_charge_effect.emitting = true
-	windup_timer.start(windup_time)
-	await windup_timer.timeout
-	is_winding_up = false
-	attack_charge_effect.emitting = false
-	if !is_instance_valid(player):
-		return
-	is_charging = true
-	audio_stream_player.play()
-	charge_visuals.visible = true
-	direction = (player.global_position - global_position).normalized()
-	charge_timer.start(charge_time)
-	await charge_timer.timeout
-	is_charging = false
-	charge_visuals.visible = false
+func change_state(state: State) -> void:
+	current_state = state
+	time_in_state = 0
+
+
+func target_reached() -> bool:
+	return player.global_position.distance_squared_to(global_position) < stop_distance * stop_distance
 
 
 func on_body_entered(body: Node2D) -> void:
-	if body.has_method("take_damage") and is_charging:
+	if body.has_method("take_damage") and current_state == State.CHARGING:
 		body.take_damage(damage)
+
+
+func on_enemy_killed() -> void:
+	rand_target.queue_free() # This needs to be queued separately because it reparents itself.

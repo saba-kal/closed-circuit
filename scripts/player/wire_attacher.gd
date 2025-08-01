@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var wire_line: Line2D
+@export var target_indicator: Node2D
 
 @onready var wire_attached_sound: AudioStreamPlayer = $WireAttachedSound
 
@@ -10,6 +11,7 @@ var stun_duration_timer: Timer
 
 
 func _ready() -> void:
+	target_indicator.visible = false
 	body_entered.connect(on_body_entered)
 	stun_duration_timer = Timer.new()
 	stun_duration_timer.one_shot = true
@@ -17,9 +19,12 @@ func _ready() -> void:
 	reset_wire()
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	for i in range(len(attached_bodies)):
 		wire_line.points[i] = attached_bodies[i].global_position
+	if len(attached_bodies) > 1:
+		target_indicator.global_position = attached_bodies[0].global_position
+	target_indicator.rotate(delta)
 
 
 func on_body_entered(body: Node2D) -> void:
@@ -39,6 +44,8 @@ func on_body_entered(body: Node2D) -> void:
 		wire_line.add_point(Vector2.ZERO)
 		SignalBus.wire_attached.emit(body)
 		wire_attached_sound.play()
+		if len(attached_bodies) > 2:
+			target_indicator.visible = true
 
 
 func stun_enemies() -> void:
@@ -60,3 +67,4 @@ func reset_wire() -> void:
 	attached_bodies = [get_parent()] # Player is always attached
 	wire_line.points = [Vector2.ZERO]
 	wire_can_be_used = true
+	target_indicator.visible = false
