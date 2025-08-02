@@ -5,22 +5,26 @@ signal health_changed(new_health: int)
 @export var speed: float = 400
 @export var max_health: int = 3
 @export var immunity_duration: float = 1.0
+@export_flags_2d_physics var immunity_layer: int
 
 @onready var player_hit_sound: AudioStreamPlayer = $PlayerHitSound
 
 var current_health: int
 var is_immune: bool = false
 var time_immune: float = 0
+var default_collision_layer: int
 
 
 func _ready() -> void:
 	current_health = max_health
+	default_collision_layer = collision_layer
 
 
 func _process(delta: float) -> void:
 	if is_immune:
 		if time_immune >= immunity_duration:
 			is_immune = false
+			collision_layer = default_collision_layer
 			modulate.a = 1.0
 		time_immune += delta
 
@@ -44,5 +48,6 @@ func take_damage(damge: int) -> void:
 	else:
 		SignalBus.player_damaged.emit()
 		is_immune = true
+		collision_layer = immunity_layer
 		modulate.a = 0.3
 		time_immune = 0

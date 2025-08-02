@@ -55,6 +55,7 @@ max_wander_path_distance = 50.0
 attack = NodePath("StopAndChargeAttack")
 wander_speed = 200.0
 attack_speed = 250.0
+score_value = 3
 
 [node name="Visuals" type="Node2D" parent="."]
 position = Vector2(0, 2)

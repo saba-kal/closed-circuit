@@ -7,12 +7,13 @@ var score: int = 0
 
 func _ready() -> void:
 	score_label.text = str(score)
-	SignalBus.enemy_killed.connect(on_enemy_killed)
+	SignalBus.enemies_killed.connect(on_enemies_killed)
 	SignalBus.game_over.connect(on_game_over)
 
 
-func on_enemy_killed(_enemy: Enemy) -> void:
-	score += 1
+func on_enemies_killed(enemies: Array[Enemy]) -> void:
+	for enemy in enemies:
+		score += len(enemies) * enemy.score_value
 	score_label.text = str(score)
 	if score > PlayerData.highest_score:
 		PlayerData.highest_score = score

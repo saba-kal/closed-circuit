@@ -62,7 +62,6 @@ func shoot_immediately() -> void:
 
 
 func set_active(active: bool) -> void:
-	time_since_last_shot = 0
 	is_active = active
 
 

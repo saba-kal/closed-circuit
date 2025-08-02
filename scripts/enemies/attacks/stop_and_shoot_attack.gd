@@ -8,17 +8,13 @@ enum State
 }
 
 @export var stop_distance: float = 150
-@export var stop_time: float = 1.5
 @export var charge_time: float = 0.5
 @export var time_between_shots: float = 1.0
 @export var nav_agent: NavAgent
 @export var projectile_shooter: ProjectileShooter
 
 var player: Player
-var is_firing_projectile: bool
-var time_since_last_shot: float = 0
-var stop_timer: Timer = Timer.new()
-var charge_timer: Timer = Timer.new()
+var time_since_last_shot: float = 100
 var current_state: State = State.CHASING
 var time_in_state: float = 0
 
@@ -26,10 +22,12 @@ var time_in_state: float = 0
 func _ready() -> void:
 	super._ready()
 	player = get_tree().get_first_node_in_group("player")
-	stop_timer.one_shot = true
-	add_child(stop_timer)
-	charge_timer.one_shot = true
-	add_child(charge_timer)
+
+
+func init() -> void:
+	# Doing this so enemy immediately starts shooting.
+	current_state = State.CHARGING
+	time_since_last_shot = 100
 
 
 func _process(delta: float) -> void:
@@ -43,7 +41,7 @@ func _process(delta: float) -> void:
 				change_state(State.STOPPED)
 		State.STOPPED:
 			nav_agent.set_movement_target(global_position)
-			if time_in_state >= stop_time:
+			if time_since_last_shot >= (time_between_shots - charge_time):
 				change_state(State.CHARGING)
 		State.CHARGING:
 			nav_agent.set_movement_target(global_position)
@@ -54,8 +52,6 @@ func _process(delta: float) -> void:
 				attack_charge_effect.emitting = false
 				if is_in_firing_distance():
 					change_state(State.STOPPED)
-					# This is so that they can immediately start shooting again. 
-					time_in_state = max(time_between_shots - charge_time, 0)
 				else:
 					change_state(State.CHASING)
 
@@ -70,7 +66,6 @@ func is_in_firing_distance() -> bool:
 func fire_projectile() -> void:
 	projectile_shooter.shoot_direction = (player.global_position - global_position).normalized()
 	projectile_shooter.shoot_immediately()
-	is_firing_projectile = false
 
 
 func change_state(new_state: State):

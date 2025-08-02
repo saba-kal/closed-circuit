@@ -12,10 +12,12 @@ enum State
 
 @export var min_wander_path_distance: float = 20
 @export var max_wander_path_distance: float = 100
+@export var follow_player_on_wander: bool = false
 @export var attack: EnemyAttack
 @export var wander_speed: float = 100
 @export var attack_speed: float = 100
 @export var required_connections: int = 1
+@export var score_value: int = 1
 
 @onready var nav_agent: NavAgent = $NavAgent
 
@@ -50,11 +52,13 @@ func try_stun() -> bool:
 	return false
 
 
-func kill() -> void:
-	if current_attach_count >= required_connections:
-		SignalBus.enemy_killed.emit(self)
-		killed.emit()
-		queue_free()
+func try_kill() -> bool:
+	if current_attach_count < required_connections:
+		return false
+	SignalBus.enemy_killed.emit(self)
+	killed.emit()
+	queue_free()
+	return true
 
 
 func get_random_direction() -> Vector2:
@@ -103,8 +107,11 @@ func enter_wander_state() -> void:
 
 
 func process_wander_state(delta: float) -> void:
-	if nav_agent.is_navigation_finished():
+	if follow_player_on_wander and is_instance_valid(player):
+		nav_agent.set_movement_target(player.global_position)
+	elif nav_agent.is_navigation_finished():
 		pick_random_wander_point()
+
 
 func pick_random_wander_point() -> void:
 	var wander_direction: Vector2 = get_random_direction()

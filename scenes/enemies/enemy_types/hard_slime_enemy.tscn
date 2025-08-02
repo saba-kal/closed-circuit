@@ -52,6 +52,7 @@ script = ExtResource("1_yve78")
 attack = NodePath("CircleAndShootAttack")
 wander_speed = 80.0
 attack_speed = 150.0
+score_value = 4
 
 [node name="Visuals" type="Node2D" parent="."]
 scale = Vector2(4, 4)
@@ -79,7 +80,7 @@ shape = SubResource("CircleShape2D_y7etm")
 
 [node name="ProjectileShooter" parent="." instance=ExtResource("5_qhr46")]
 projectile_speed = 200.0
-time_between_shots = 3.0
+time_between_shots = 4.0
 
 [node name="CircleAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("6_e0hh5")]
 nav_agent = NodePath("../NavAgent")

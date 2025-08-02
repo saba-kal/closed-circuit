@@ -7,6 +7,7 @@ var speed: float = 500
 var damage: int = 1
 var lifetime: float = 5
 var time_since_spawn: float = 0
+var can_damage = true
 
 
 func _ready() -> void:
@@ -28,7 +29,7 @@ func _physics_process(delta: float) -> void:
 
 
 func on_body_entered(body: Node2D) -> void:
-	if body.has_method("take_damage"):
+	if can_damage && body.has_method("take_damage"):
 		body.take_damage(damage)
 	if is_stationary:
 		return

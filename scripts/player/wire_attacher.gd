@@ -30,7 +30,6 @@ func _process(delta: float) -> void:
 func on_body_entered(body: Node2D) -> void:
 	if body is not Enemy:
 		return
-
 	if len(attached_bodies) >= 3 && attached_bodies[0] == body:
 		attached_bodies[-1] = body
 		wire_can_be_used = false
@@ -58,9 +57,12 @@ func stun_enemies() -> void:
 
 
 func kill_enemies() -> void:
+	var enemies_killed: Array[Enemy]
 	for body in attached_bodies:
 		if body is Enemy:
-			body.kill()
+			if body.try_kill() and body not in enemies_killed:
+				enemies_killed.append(body)
+	SignalBus.enemies_killed.emit(enemies_killed)
 
 
 func reset_wire() -> void:

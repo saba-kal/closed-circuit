@@ -56,6 +56,7 @@ script = ExtResource("1_lglxn")
 attack = NodePath("StopAndShootAttack")
 wander_speed = 150.0
 attack_speed = 250.0
+score_value = 6
 
 [node name="Visuals" type="Node2D" parent="."]
 script = ExtResource("2_vbe6o")
@@ -77,11 +78,13 @@ shape = SubResource("CircleShape2D_urq1n")
 
 [node name="ProjectileShooter" parent="." instance=ExtResource("6_vusgg")]
 projectile_scene = ExtResource("7_u25gg")
-projectile_speed = 600.0
-angle_between_projectiles = 10.0
+projectile_speed = 300.0
+projectile_lifetime = 7.0
+angle_between_projectiles = 25.0
 
 [node name="StopAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("8_7bsgl")]
-stop_distance = 200.0
+stop_distance = 400.0
+time_between_shots = 3.0
 nav_agent = NodePath("../NavAgent")
 projectile_shooter = NodePath("../ProjectileShooter")
 

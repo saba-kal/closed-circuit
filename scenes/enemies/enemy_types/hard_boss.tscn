@@ -1,0 +1,136 @@
+[gd_scene load_steps=15 format=3 uid="uid://crh5pyjkitika"]
+
+[ext_resource type="Script" uid="uid://btkuxu2cve4eu" path="res://scripts/enemies/enemy.gd" id="1_h2ojo"]
+[ext_resource type="Script" uid="uid://dr3l56feccix2" path="res://scripts/enemies/enemy_sprite_changer.gd" id="2_2fdcn"]
+[ext_resource type="Texture2D" uid="uid://vjjtnk1hbs1d" path="res://textures/enemies/hard_boss_sprite_normal.png" id="3_h2ojo"]
+[ext_resource type="Texture2D" uid="uid://dy23i42btfj1n" path="res://textures/enemies/hard_boss_sprite_angry.png" id="4_2fdcn"]
+[ext_resource type="PackedScene" uid="uid://cdtls42t677qv" path="res://scenes/enemies/components/nav_agent.tscn" id="5_g3ghl"]
+[ext_resource type="PackedScene" uid="uid://bgsme7imgf84u" path="res://scenes/enemies/components/projectile_shooter.tscn" id="6_f0e53"]
+[ext_resource type="PackedScene" uid="uid://c1ym4o8d3dw8x" path="res://scenes/projectiles/medium_projectile.tscn" id="7_1e8dk"]
+[ext_resource type="PackedScene" uid="uid://c6kh2lk3igjic" path="res://scenes/enemies/attacks/circle_and_shoot_attack.tscn" id="8_s8j13"]
+[ext_resource type="Script" uid="uid://dfciyya7sc2ow" path="res://scripts/projectiles/projectile_rotator.gd" id="9_xb21v"]
+[ext_resource type="PackedScene" uid="uid://bmbefwbk4kfie" path="res://scenes/projectiles/large_projectile.tscn" id="10_wy54h"]
+[ext_resource type="FontFile" uid="uid://q47mlpirt62u" path="res://fonts/8bitOperatorPlus8-Regular.ttf" id="11_642ct"]
+[ext_resource type="Script" uid="uid://jqwfexyvnh1j" path="res://scripts/enemies/enemy_connection_counter.gd" id="12_oo6ge"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7dbts"]
+radius = 40.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_dhd8r"]
+font = ExtResource("11_642ct")
+font_size = 46
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="HardBoss" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
+collision_layer = 4
+script = ExtResource("1_h2ojo")
+attack = NodePath("CircleAndShootAttack")
+wander_speed = 150.0
+attack_speed = 175.0
+required_connections = 10
+score_value = 20
+metadata/_custom_type_script = "uid://btkuxu2cve4eu"
+
+[node name="Visuals" type="Node2D" parent="."]
+script = ExtResource("2_2fdcn")
+
+[node name="NormalSprite" type="Sprite2D" parent="Visuals"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("3_h2ojo")
+
+[node name="AngrySprite" type="Sprite2D" parent="Visuals"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("4_2fdcn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7dbts")
+
+[node name="NavAgent" parent="." instance=ExtResource("5_g3ghl")]
+
+[node name="ProjectileShooter" parent="." instance=ExtResource("6_f0e53")]
+projectile_scene = ExtResource("7_1e8dk")
+projectile_speed = 300.0
+time_between_shots = 4.0
+projectile_lifetime = 10.0
+projectile_count = 7
+angle_between_projectiles = 20.0
+
+[node name="CircleAndShootAttack" parent="." node_paths=PackedStringArray("nav_agent", "projectile_shooter") instance=ExtResource("8_s8j13")]
+nav_agent = NodePath("../NavAgent")
+projectile_shooter = NodePath("../ProjectileShooter")
+
+[node name="Marker2D" parent="CircleAndShootAttack/RandomlyRotatingTarget" index="0"]
+position = Vector2(320, 0)
+
+[node name="RotatingProjectiles" type="Node2D" parent="."]
+script = ExtResource("9_xb21v")
+rotation_speed = 0.75
+
+[node name="LargeProjectile" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(120, 0)
+is_stationary = true
+
+[node name="LargeProjectile2" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(240, 0)
+is_stationary = true
+
+[node name="LargeProjectile9" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(360, 0)
+is_stationary = true
+
+[node name="LargeProjectile3" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(-240, 0)
+is_stationary = true
+
+[node name="LargeProjectile10" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(-360, 0)
+is_stationary = true
+
+[node name="LargeProjectile4" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(-120, 0)
+is_stationary = true
+
+[node name="LargeProjectile5" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(0, 120)
+rotation = 1.5708
+is_stationary = true
+
+[node name="LargeProjectile6" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(0, 240)
+rotation = 1.5708
+is_stationary = true
+
+[node name="LargeProjectile11" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(0, 360)
+rotation = 1.5708
+is_stationary = true
+
+[node name="LargeProjectile7" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(0, -240)
+rotation = 1.5708
+is_stationary = true
+
+[node name="LargeProjectile12" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(0, -360)
+rotation = 1.5708
+is_stationary = true
+
+[node name="LargeProjectile8" parent="RotatingProjectiles" instance=ExtResource("10_wy54h")]
+position = Vector2(0, -120)
+rotation = 1.5708
+is_stationary = true
+
+[node name="Label" type="Label" parent="." node_paths=PackedStringArray("enemy")]
+texture_filter = 1
+offset_left = -24.0
+offset_top = -32.0
+offset_right = 32.0
+text = "00"
+label_settings = SubResource("LabelSettings_dhd8r")
+script = ExtResource("12_oo6ge")
+enemy = NodePath("..")
+
+[editable path="CircleAndShootAttack"]

@@ -8,8 +8,6 @@ extends Control
 
 @onready var game_over_sound: AudioStreamPlayer = $GameOverSound
 
-
-var player_leaderboard_position: int = 0
 var max_leaderboard_entries: int = 10
 var player_saved_score: bool = false
 
@@ -58,7 +56,6 @@ func on_get_scores_complete(result: Dictionary) -> void:
 		table_text += "[cell expand=20 shrink=false][right][color=YELLOW]%d[/color][/right][/cell]" % score_tracker.score
 
 	table_text += "[/table]"
-	
 	leaderboard_text.text = table_text
 
 
