@@ -24,6 +24,7 @@ SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"
 ConfigureSilentWolf="res://scripts/config/configure_silent_wolf.gd"
 PlayerData="*res://scripts/player/player_data.gd"
 HitStopManager="*res://scripts/common/hit_stop_manager.gd"
+ParticleEffectLoader="res://scenes/effects/particle_effect_loader.tscn"
 
 [display]
 

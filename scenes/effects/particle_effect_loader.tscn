@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsv407043n6k1"]
+
+[ext_resource type="Script" uid="uid://dvy01g73cud6m" path="res://scripts/effects/particle_effect_loader.gd" id="1_0tldr"]
+[ext_resource type="PackedScene" uid="uid://ddrcva8of1do1" path="res://scenes/effects/attack_charge_effect.tscn" id="2_5u4au"]
+[ext_resource type="PackedScene" uid="uid://bvb626vloysb6" path="res://scenes/effects/enemy_death_effect.tscn" id="3_fgeaa"]
+[ext_resource type="PackedScene" uid="uid://f03xarhwnxb0" path="res://scenes/effects/lightning_effect.tscn" id="4_f7k4o"]
+
+[node name="ParticleEffectLoader" type="Node2D"]
+script = ExtResource("1_0tldr")
+
+[node name="AttackChargeEffect" parent="." instance=ExtResource("2_5u4au")]
+
+[node name="EnemyDeathEffect" parent="." instance=ExtResource("3_fgeaa")]
+
+[node name="LightningEffect" parent="." instance=ExtResource("4_f7k4o")]
