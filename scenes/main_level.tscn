@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://c8clp8ccdf4jg"]
+[gd_scene load_steps=52 format=4 uid="uid://c8clp8ccdf4jg"]
 
 [ext_resource type="Shader" uid="uid://cehi66nofn478" path="res://shaders/starry_background.gdshader" id="1_cssx7"]
 [ext_resource type="PackedScene" uid="uid://ogsrjopj7pja" path="res://scenes/player/player.tscn" id="1_ufxs0"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cvtuitqtyy3uv" path="res://scenes/ui/nav_button.tscn" id="10_5fr2l"]
 [ext_resource type="AudioStream" uid="uid://th1tkw3vkus0" path="res://audio/sfx/electric_zap.ogg" id="10_6nivd"]
 [ext_resource type="PackedScene" uid="uid://bvb626vloysb6" path="res://scenes/effects/enemy_death_effect.tscn" id="10_al56o"]
+[ext_resource type="PackedScene" uid="uid://cxc8q4ugvfibl" path="res://scenes/effects/easy_boss.tscn" id="10_c88u2"]
 [ext_resource type="Script" uid="uid://c01pw2lepdx51" path="res://scripts/ui/pause_menu.gd" id="10_fkrx8"]
 [ext_resource type="Script" uid="uid://c6unpj57o1d78" path="res://scripts/ui/game_over_menu.gd" id="10_mwgft"]
 [ext_resource type="Script" uid="uid://y8hwvtlnyme1" path="res://scripts/ui/scene_change_button.gd" id="11_2sb77"]
@@ -30,6 +31,8 @@
 [ext_resource type="PackedScene" uid="uid://bkhpfusmhrdg3" path="res://scenes/enemies/enemy_types/hard_slime_enemy.tscn" id="28_1irq3"]
 [ext_resource type="PackedScene" uid="uid://qxrcmvtwyxt3" path="res://scenes/enemies/enemy_types/hard_eye_enemy.tscn" id="29_iycfq"]
 [ext_resource type="PackedScene" uid="uid://b5aawhcs55f0v" path="res://scenes/enemies/enemy_types/hard_skull_enemy.tscn" id="30_rcrbw"]
+[ext_resource type="Shader" uid="uid://m2e2h7g1cg10" path="res://shaders/chromatic_aberration.gdshader" id="32_gr2jy"]
+[ext_resource type="Script" uid="uid://bhvh0nxlqy1f8" path="res://scripts/effects/player_damaged_effect.gd" id="33_3iae7"]
 
 [sub_resource type="Environment" id="Environment_ndwfr"]
 background_mode = 3
@@ -123,6 +126,47 @@ bg_color = Color(0.780258, 0.348489, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iycfq"]
 bg_color = Color(1, 0.494118, 0.172549, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3iae7"]
+shader = ExtResource("32_gr2jy")
+shader_parameter/aberration = 0.147
+shader_parameter/strength = 0.0
+
+[sub_resource type="Animation" id="Animation_gr2jy"]
+resource_name = "player_hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.05, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_3iae7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cycrt"]
+_data = {
+&"RESET": SubResource("Animation_3iae7"),
+&"player_hurt": SubResource("Animation_gr2jy")
+}
+
 [node name="MainLevel" type="Node2D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -193,6 +237,18 @@ position = Vector2(219, 214)
 
 [node name="SkullEnemy" parent="EnemySpawner" instance=ExtResource("6_bq26l")]
 position = Vector2(117, 97)
+
+[node name="EasyBoss" parent="EnemySpawner" instance=ExtResource("10_c88u2")]
+position = Vector2(576, 104)
+
+[node name="SlimeEnemy" parent="EnemySpawner" instance=ExtResource("28_1irq3")]
+position = Vector2(-256, -136)
+
+[node name="HardEyeEnemy" parent="EnemySpawner" instance=ExtResource("29_iycfq")]
+position = Vector2(160, -160)
+
+[node name="SkullEnemy2" parent="EnemySpawner" instance=ExtResource("30_rcrbw")]
+position = Vector2(-408, -56)
 
 [node name="ElectricityEffectSpawner" type="Node2D" parent="."]
 script = ExtResource("8_uk2yf")
@@ -501,11 +557,18 @@ text = "RESUME"
 layout_mode = 2
 text = "MAIN MENU"
 
-[node name="SlimeEnemy" parent="." instance=ExtResource("28_1irq3")]
-position = Vector2(-256, -136)
+[node name="ChromaticAberrationEffect" type="TextureRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_3iae7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_1irq3")
+script = ExtResource("33_3iae7")
 
-[node name="HardEyeEnemy" parent="." instance=ExtResource("29_iycfq")]
-position = Vector2(160, -160)
-
-[node name="SkullEnemy" parent="." instance=ExtResource("30_rcrbw")]
-position = Vector2(-408, -56)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ChromaticAberrationEffect"]
+libraries = {
+&"": SubResource("AnimationLibrary_cycrt")
+}

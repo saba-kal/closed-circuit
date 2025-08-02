@@ -101,6 +101,7 @@ texture_filter = 1
 texture_repeat = 2
 points = PackedVector2Array(-67, 37, 0, 0, -100, -62)
 width = 16.0
+default_color = Color(1, 1.5, 2.5, 1)
 texture = ExtResource("5_75vfm")
 texture_mode = 1
 antialiased = true

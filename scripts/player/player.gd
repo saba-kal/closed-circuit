@@ -24,6 +24,9 @@ func take_damage(damge: int) -> void:
 	current_health -= damge
 	health_changed.emit(current_health)
 	player_hit_sound.play()
+	HitStopManager.frame_freeze(0.1, 0.2)
 	if current_health <= 0:
 		SignalBus.game_over.emit()
 		queue_free()
+	else:
+		SignalBus.player_damaged.emit()

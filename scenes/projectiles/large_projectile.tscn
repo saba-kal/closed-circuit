@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmbefwbk4kfie"]
+
+[ext_resource type="Script" uid="uid://ubjypca8cbqo" path="res://scripts/projectiles/projectile.gd" id="1_k7l38"]
+[ext_resource type="Texture2D" uid="uid://3k8h587njqn3" path="res://textures/projectiles/large_projectile.png" id="2_v2kub"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q8oyu"]
+radius = 32.0
+
+[node name="LargeProjectile" type="Area2D"]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_k7l38")
+metadata/_custom_type_script = "uid://ubjypca8cbqo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q8oyu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.377991, 0.31005, 1)
+self_modulate = Color(3, 3, 3, 1)
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("2_v2kub")
