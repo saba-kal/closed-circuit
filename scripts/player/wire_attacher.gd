@@ -42,7 +42,7 @@ func on_body_entered(body: Node2D) -> void:
 	elif wire_can_be_used and body not in attached_bodies:
 		attached_bodies.insert(len(attached_bodies) - 1, body)
 		wire_line.add_point(Vector2.ZERO)
-		SignalBus.wire_attached.emit(body)
+		SignalBus.wire_attached.emit(body, attached_bodies)
 		wire_attached_sound.play()
 		if len(attached_bodies) > 2:
 			target_indicator.visible = true
@@ -52,8 +52,8 @@ func stun_enemies() -> void:
 	var enemies: Array[Enemy] = []
 	for body in attached_bodies:
 		if body is Enemy and body not in enemies:
-			body.stun()
-			enemies.append(body)
+			if body.try_stun():
+				enemies.append(body)
 	SignalBus.enemies_stunned.emit(enemies)
 
 
@@ -68,3 +68,4 @@ func reset_wire() -> void:
 	wire_line.points = [Vector2.ZERO]
 	wire_can_be_used = true
 	target_indicator.visible = false
+	SignalBus.wire_reset.emit()

@@ -9,6 +9,7 @@ signal projectile_fired()
 @export var time_between_shots: float = 0.25
 @export var shot_delay: float = 1.0
 @export var shoot_direction: Vector2 = Vector2.UP
+@export var projectile_lifetime: float = 5.0
 @export_range(1, 16) var projectile_count: int = 1
 @export var angle_between_projectiles: float = 15.0
 
@@ -52,6 +53,7 @@ func shoot_immediately() -> void:
 		projectile.speed = projectile_speed
 		projectile.damage = projectile_damage
 		projectile.direction = direction
+		projectile.lifetime = projectile_lifetime
 		get_tree().current_scene.add_child(projectile)
 		projectile.global_position = global_position
 	shoot_sound.play()

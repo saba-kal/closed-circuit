@@ -26,9 +26,9 @@ func _ready() -> void:
 
 
 func on_game_over() -> void:
-	await get_tree().physics_frame
-	visible = true
 	game_over_sound.play()
+	await get_tree().create_timer(1).timeout
+	visible = true
 	save_score_button.disabled = len(PlayerData.player_name) <=0
 	player_name_field.text = PlayerData.player_name
 	final_score_label.text = "FINAL SCORE: " + str(score_tracker.score)

@@ -15,17 +15,20 @@ enum State
 @export var attack: EnemyAttack
 @export var wander_speed: float = 100
 @export var attack_speed: float = 100
+@export var required_connections: int = 1
 
 @onready var nav_agent: NavAgent = $NavAgent
 
 var current_state: State = State.WANDER
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var player: Player
+var current_attach_count: int = 0
 
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	SignalBus.wire_attached.connect(on_wire_attached)
+	SignalBus.wire_reset.connect(on_wire_reset)
 	SignalBus.game_over.connect(on_game_over)
 	enter_wander_state()
 
@@ -40,14 +43,18 @@ func _process(delta: float) -> void:
 			process_stun_state(delta)
 
 
-func stun() -> void:
-	enter_stun_state()
+func try_stun() -> bool:
+	if current_attach_count >= required_connections:
+		enter_stun_state()
+		return true
+	return false
 
 
 func kill() -> void:
-	SignalBus.enemy_killed.emit(self)
-	killed.emit()
-	queue_free()
+	if current_attach_count >= required_connections:
+		SignalBus.enemy_killed.emit(self)
+		killed.emit()
+		queue_free()
 
 
 func get_random_direction() -> Vector2:
@@ -64,9 +71,17 @@ func get_random_direction() -> Vector2:
 	][randi].normalized()
 
 
-func on_wire_attached(node: Node2D) -> void:
+func on_wire_attached(node: Node2D, attached_nodes: Array[Node2D]) -> void:
 	if node == self:
 		enter_attack_state()
+	if self in attached_nodes:
+		# Subtract 1 for self.
+		current_attach_count = len(attached_nodes) - 1
+
+
+func on_wire_reset() -> void:
+	if current_state == State.ATTACK && !is_queued_for_deletion():
+		enter_wander_state()
 
 
 func on_game_over() -> void:
