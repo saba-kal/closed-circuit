@@ -9,6 +9,7 @@ extends Control
 
 var max_leaderboard_entries: int = 10
 var player_saved_score: bool = false
+var leaderboard_name: String = "closed_cirtcuit"
 
 
 func _enter_tree() -> void:
@@ -34,10 +35,14 @@ func on_game_over() -> void:
 	else:
 		final_score_label.text = "SCORE %d, HIGH SCORE: %d" % [PlayerData.current_score, PlayerData.highest_score]
 	leaderboard_text.text = "Loading..."
-	SilentWolf.Scores.get_scores()
+	SilentWolf.Scores.get_scores(0, leaderboard_name)
 
 
 func on_get_scores_complete(result: Dictionary) -> void:
+	
+	if len(result.scores) == 0:
+		leaderboard_text.text = "Leaderboard is empty. Be the first to post a score!"
+		return
 
 	var player_found: bool = false
 	var table_text = "[table=2]"
@@ -51,7 +56,7 @@ func on_get_scores_complete(result: Dictionary) -> void:
 		table_text += "[cell expand=20 shrink=false][right][color=%s]%d[/color][/right][/cell]" % [color, int(score_dict["score"])]
 	
 	if !player_found && player_saved_score:
-		var score_pos_result = await SilentWolf.Scores.get_score_position(PlayerData.highest_score).sw_get_position_complete
+		var score_pos_result = await SilentWolf.Scores.get_score_position(PlayerData.highest_score, leaderboard_name).sw_get_position_complete
 		var player_leaderboard_position = int(score_pos_result["position"])
 		table_text += "[cell expand=80 shrink=false][color=WHITE]...[/color][/cell]"
 		table_text += "[cell expand=20 shrink=false][/cell]"
@@ -67,9 +72,9 @@ func on_save_score_button() -> void:
 	player_name_field.editable = false
 	leaderboard_text.text = "Loading..."
 	PlayerData.player_name = player_name_field.text
-	await SilentWolf.Scores.save_score(player_name_field.text, PlayerData.highest_score).sw_save_score_complete
+	await SilentWolf.Scores.save_score(player_name_field.text, PlayerData.highest_score, leaderboard_name).sw_save_score_complete
 	player_saved_score = true
-	SilentWolf.Scores.get_scores()
+	SilentWolf.Scores.get_scores(0, leaderboard_name)
 
 
 func on_player_name_text_changed(new_text: String) -> void:
