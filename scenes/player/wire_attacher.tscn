@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxjph4jd47yco"]
+
+[ext_resource type="Script" uid="uid://bq7y17rfknm5s" path="res://scripts/player/wire_attacher.gd" id="1_7vt3o"]
+[ext_resource type="AudioStream" uid="uid://hoshkco80vio" path="res://audio/sfx/wire_attached_sound.wav" id="2_bts2n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dovo2"]
+radius = 25.4951
+
+[node name="WireAttacher" type="Area2D" node_paths=PackedStringArray("wire_line", "target_indicator")]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_7vt3o")
+wire_line = NodePath("")
+target_indicator = NodePath("")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dovo2")
+
+[node name="WireAttachedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_bts2n")
+volume_db = -5.0

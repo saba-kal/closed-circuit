@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv5fj4vvqr26e"]
+
+[ext_resource type="Texture2D" uid="uid://bvwiihlufnhr1" path="res://textures/wire/wire_texture.png" id="1_uvmur"]
+
+[node name="WireLine2D" type="Line2D"]
+top_level = true
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+points = PackedVector2Array(-67, 37, 0, 0, -100, -62)
+width = 16.0
+default_color = Color(1, 1.5, 2.5, 1)
+texture = ExtResource("1_uvmur")
+texture_mode = 1
+antialiased = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=4 uid="uid://c8clp8ccdf4jg"]
+[gd_scene load_steps=60 format=4 uid="uid://c8clp8ccdf4jg"]
 
 [ext_resource type="Shader" uid="uid://cehi66nofn478" path="res://shaders/starry_background.gdshader" id="1_cssx7"]
 [ext_resource type="PackedScene" uid="uid://ogsrjopj7pja" path="res://scenes/player/player.tscn" id="1_ufxs0"]
@@ -13,18 +13,14 @@
 [ext_resource type="PackedScene" uid="uid://cxc8q4ugvfibl" path="res://scenes/enemies/enemy_types/easy_boss.tscn" id="8_c88u2"]
 [ext_resource type="Script" uid="uid://c15ofh1kkkjbu" path="res://scripts/ui/player_health_bar.gd" id="8_iqu8w"]
 [ext_resource type="Texture2D" uid="uid://dkuwbgmrkqnmk" path="res://textures/ui/heart_16x16.png" id="8_k5pu3"]
-[ext_resource type="Script" uid="uid://lc22rod8waw3" path="res://scripts/effects/electricity_effect_spawner.gd" id="8_uk2yf"]
-[ext_resource type="PackedScene" uid="uid://f03xarhwnxb0" path="res://scenes/effects/lightning_effect.tscn" id="9_ondrs"]
 [ext_resource type="PackedScene" uid="uid://cvtuitqtyy3uv" path="res://scenes/ui/nav_button.tscn" id="10_5fr2l"]
-[ext_resource type="AudioStream" uid="uid://th1tkw3vkus0" path="res://audio/sfx/electric_zap.ogg" id="10_6nivd"]
-[ext_resource type="PackedScene" uid="uid://bvb626vloysb6" path="res://scenes/effects/enemy_death_effect.tscn" id="10_al56o"]
 [ext_resource type="Script" uid="uid://yoihu0w1knuk" path="res://scripts/enemies/enemy_spawn_data.gd" id="10_cycrt"]
 [ext_resource type="Script" uid="uid://c01pw2lepdx51" path="res://scripts/ui/pause_menu.gd" id="10_fkrx8"]
 [ext_resource type="Script" uid="uid://c6unpj57o1d78" path="res://scripts/ui/game_over_menu.gd" id="10_mwgft"]
 [ext_resource type="Script" uid="uid://y8hwvtlnyme1" path="res://scripts/ui/scene_change_button.gd" id="11_2sb77"]
-[ext_resource type="AudioStream" uid="uid://djdphrigvavyr" path="res://audio/sfx/electric_explosion.mp3" id="11_al56o"]
 [ext_resource type="AudioStream" uid="uid://d23v0l1dq5b0d" path="res://audio/sfx/game_over_sound.wav" id="14_ff0s2"]
 [ext_resource type="PackedScene" uid="uid://crh5pyjkitika" path="res://scenes/enemies/enemy_types/hard_boss.tscn" id="15_pfmml"]
+[ext_resource type="PackedScene" uid="uid://dkh38glas51n8" path="res://scenes/effects/electricity_effect_spawner.tscn" id="16_c88u2"]
 [ext_resource type="LabelSettings" uid="uid://disjveqdkjcnr" path="res://fonts/title_label_settings.tres" id="17_ndwfr"]
 [ext_resource type="AudioStream" uid="uid://14tsa2blpwd5" path="res://audio/sfx/button_click.wav" id="17_siio1"]
 [ext_resource type="LabelSettings" uid="uid://dxxi81sgvkvrr" path="res://fonts/default_label_settings.tres" id="18_nc5r2"]
@@ -324,17 +320,7 @@ position = Vector2(337, -151)
 [node name="EasySlimeEnemy3" parent="EnemySpawner" instance=ExtResource("2_ufxs0")]
 position = Vector2(-283, 86)
 
-[node name="ElectricityEffectSpawner" type="Node2D" parent="."]
-script = ExtResource("8_uk2yf")
-particle_effect = ExtResource("9_ondrs")
-death_effect = ExtResource("10_al56o")
-
-[node name="ZapSound" type="AudioStreamPlayer2D" parent="ElectricityEffectSpawner"]
-stream = ExtResource("10_6nivd")
-
-[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="ElectricityEffectSpawner"]
-stream = ExtResource("11_al56o")
-volume_db = 10.0
+[node name="ElectricityEffectSpawner" parent="." instance=ExtResource("16_c88u2")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -395,7 +381,6 @@ texture = ExtResource("8_k5pu3")
 stretch_mode = 4
 
 [node name="GameOverMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("score_tracker", "final_score_label", "save_score_button", "player_name_field", "leaderboard_text")]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

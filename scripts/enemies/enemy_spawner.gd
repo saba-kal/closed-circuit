@@ -7,6 +7,7 @@ extends Node2D
 		if Engine.is_editor_hint():
 			queue_redraw()
 @export var spawn_data_per_difficulty: Array[EnemySpawnData]
+@export var spawn_immediately: bool = false
 
 var spawning_enabled: bool = false
 var time_since_last_spawn: float = 0
@@ -21,6 +22,8 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	SignalBus.enemy_killed.connect(on_enemy_killed)
 	SignalBus.game_over.connect(on_game_over)
+	if spawn_immediately:
+		spawning_enabled = true
 
 
 func _process(delta: float) -> void:

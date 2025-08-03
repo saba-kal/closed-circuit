@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkh38glas51n8"]
+
+[ext_resource type="Script" uid="uid://lc22rod8waw3" path="res://scripts/effects/electricity_effect_spawner.gd" id="1_07ugn"]
+[ext_resource type="PackedScene" uid="uid://f03xarhwnxb0" path="res://scenes/effects/lightning_effect.tscn" id="2_l6mdi"]
+[ext_resource type="PackedScene" uid="uid://bvb626vloysb6" path="res://scenes/effects/enemy_death_effect.tscn" id="3_cw8ph"]
+[ext_resource type="AudioStream" uid="uid://th1tkw3vkus0" path="res://audio/sfx/electric_zap.ogg" id="4_vgb3w"]
+[ext_resource type="AudioStream" uid="uid://djdphrigvavyr" path="res://audio/sfx/electric_explosion.mp3" id="5_pg0e1"]
+
+[node name="ElectricityEffectSpawner" type="Node2D"]
+script = ExtResource("1_07ugn")
+particle_effect = ExtResource("2_l6mdi")
+death_effect = ExtResource("3_cw8ph")
+
+[node name="ZapSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_vgb3w")
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_pg0e1")
+volume_db = 10.0

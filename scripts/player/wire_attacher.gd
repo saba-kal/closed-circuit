@@ -1,7 +1,9 @@
-extends Area2D
+class_name WireAttacher extends Area2D
 
 @export var wire_line: Line2D
 @export var target_indicator: Node2D
+@export var connect_self: bool = true
+@export var manually_attach: bool = false
 
 @onready var wire_attached_sound: AudioStreamPlayer = $WireAttachedSound
 
@@ -28,21 +30,32 @@ func _process(delta: float) -> void:
 
 
 func on_body_entered(body: Node2D) -> void:
-	if body is not Enemy:
-		return
-	if len(attached_bodies) >= 3 && attached_bodies[0] == body:
-		attached_bodies[-1] = body
+	if body is Enemy and not manually_attach:
+		attach_enemy(body)
+
+
+func attach_enemy(enemy: Enemy) -> void:
+	if len(attached_bodies) >= 3 && attached_bodies[0] == enemy:
+		if connect_self:
+			attached_bodies[-1] = enemy
+		else:
+			attached_bodies.append(enemy)
+			wire_line.add_point(enemy.global_position)
 		wire_can_be_used = false
 		stun_enemies()
 		stun_duration_timer.start(0.5)
 		await stun_duration_timer.timeout
 		kill_enemies()
 		reset_wire()
-	elif wire_can_be_used and body not in attached_bodies:
-		attached_bodies.insert(len(attached_bodies) - 1, body)
+	elif wire_can_be_used and enemy not in attached_bodies:
+		if connect_self:
+			attached_bodies.insert(len(attached_bodies) - 1, enemy)
+		else:
+			attached_bodies.append(enemy)
 		wire_line.add_point(Vector2.ZERO)
-		SignalBus.wire_attached.emit(body, attached_bodies)
-		wire_attached_sound.play()
+		SignalBus.wire_attached.emit(enemy, attached_bodies)
+		if len(attached_bodies) > 1:
+			wire_attached_sound.play()
 		if len(attached_bodies) > 2:
 			target_indicator.visible = true
 
@@ -66,8 +79,12 @@ func kill_enemies() -> void:
 
 
 func reset_wire() -> void:
-	attached_bodies = [get_parent()] # Player is always attached
-	wire_line.points = [Vector2.ZERO]
+	if connect_self:
+		attached_bodies = [get_parent()] # Player is always attached
+		wire_line.points = [Vector2.ZERO]
+	else:
+		attached_bodies = []
+		wire_line.points = []
 	wire_can_be_used = true
 	target_indicator.visible = false
 	SignalBus.wire_reset.emit()

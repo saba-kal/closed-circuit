@@ -76,7 +76,7 @@ func get_random_direction() -> Vector2:
 
 
 func on_wire_attached(node: Node2D, attached_nodes: Array[Node2D]) -> void:
-	if node == self:
+	if node == self and is_instance_valid(player):
 		enter_attack_state()
 	if self in attached_nodes:
 		# Subtract 1 for self.
