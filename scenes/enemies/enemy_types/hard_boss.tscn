@@ -26,9 +26,11 @@ outline_color = Color(0, 0, 0, 1)
 collision_layer = 4
 script = ExtResource("1_h2ojo")
 attack = NodePath("CircleAndShootAttack")
-wander_speed = 150.0
-attack_speed = 175.0
-required_connections = 10
+min_wander_speed = 150.0
+max_wander_speed = 150.0
+min_attack_speed = 175.0
+max_attack_speed = 175.0
+required_connections = 15
 score_value = 20
 metadata/_custom_type_script = "uid://btkuxu2cve4eu"
 

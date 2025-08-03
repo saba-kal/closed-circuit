@@ -51,11 +51,12 @@ _data = {
 collision_layer = 4
 script = ExtResource("1_0o2h6")
 min_wander_path_distance = 40.0
-max_wander_path_distance = 50.0
 attack = NodePath("StopAndChargeAttack")
-wander_speed = 200.0
-attack_speed = 250.0
-score_value = 3
+min_wander_speed = 180.0
+max_wander_speed = 220.0
+min_attack_speed = 300.0
+max_attack_speed = 350.0
+score_value = 2
 
 [node name="Visuals" type="Node2D" parent="."]
 position = Vector2(0, 2)
@@ -89,7 +90,8 @@ libraries = {
 autoplay = "idle"
 
 [node name="StopAndChargeAttack" parent="." node_paths=PackedStringArray("nav_agent", "charge_visuals") instance=ExtResource("6_xrgtg")]
-time_between_charges = 5.0
+stop_distance = 250.0
+time_between_charges = 3.0
 windup_time = 0.5
 nav_agent = NodePath("../NavAgent")
 charge_visuals = NodePath("../Visuals/GlowSprite")

@@ -54,9 +54,11 @@ _data = {
 collision_layer = 4
 script = ExtResource("1_d5kdv")
 attack = NodePath("StopAndShootAttack")
-wander_speed = 150.0
-attack_speed = 250.0
-score_value = 2
+min_wander_speed = 120.0
+max_wander_speed = 180.0
+min_attack_speed = 230.0
+max_attack_speed = 270.0
+score_value = 3
 
 [node name="Visuals" type="Node2D" parent="."]
 script = ExtResource("2_kh6ds")

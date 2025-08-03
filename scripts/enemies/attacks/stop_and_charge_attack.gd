@@ -46,10 +46,10 @@ func _physics_process(delta: float) -> void:
 				change_state(State.WINDUP)
 		State.WINDUP:
 			nav_agent.set_movement_target(global_position)
-			attack_charge_effect.emitting = true
+			attack_charge_effect.set_enabled(true)
 			if time_in_state >= windup_time:
 				change_state(State.CHARGING)
-				attack_charge_effect.emitting = false
+				attack_charge_effect.set_enabled(false)
 				direction = (player.global_position - global_position).normalized()
 		State.CHARGING:
 			charge_visuals.visible = true

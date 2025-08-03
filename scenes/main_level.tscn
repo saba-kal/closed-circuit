@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=4 uid="uid://c8clp8ccdf4jg"]
+[gd_scene load_steps=62 format=4 uid="uid://c8clp8ccdf4jg"]
 
 [ext_resource type="Shader" uid="uid://cehi66nofn478" path="res://shaders/starry_background.gdshader" id="1_cssx7"]
 [ext_resource type="PackedScene" uid="uid://ogsrjopj7pja" path="res://scenes/player/player.tscn" id="1_ufxs0"]
@@ -104,13 +104,13 @@ script = ExtResource("10_cycrt")
 spawnable_enemies = Array[PackedScene]([ExtResource("2_ufxs0")])
 max_enemies = 25
 time_between_spawns = 1.0
-enemies_per_spawn = 1
+enemies_per_spawn = 2
 kill_count_for_next_difficulty = 10
 metadata/_custom_type_script = "uid://yoihu0w1knuk"
 
 [sub_resource type="Resource" id="Resource_cycrt"]
 script = ExtResource("10_cycrt")
-spawnable_enemies = Array[PackedScene]([ExtResource("2_ufxs0"), ExtResource("5_8ra5a")])
+spawnable_enemies = Array[PackedScene]([ExtResource("2_ufxs0"), ExtResource("6_bq26l")])
 max_enemies = 30
 time_between_spawns = 1.0
 enemies_per_spawn = 1
@@ -139,7 +139,7 @@ metadata/_custom_type_script = "uid://yoihu0w1knuk"
 [sub_resource type="Resource" id="Resource_7ul7a"]
 script = ExtResource("10_cycrt")
 spawnable_enemies = Array[PackedScene]([ExtResource("28_1irq3"), ExtResource("5_8ra5a"), ExtResource("6_bq26l")])
-max_enemies = 50
+max_enemies = 60
 time_between_spawns = 0.75
 enemies_per_spawn = 1
 kill_count_for_next_difficulty = 25
@@ -148,7 +148,7 @@ metadata/_custom_type_script = "uid://yoihu0w1knuk"
 [sub_resource type="Resource" id="Resource_kxeow"]
 script = ExtResource("10_cycrt")
 spawnable_enemies = Array[PackedScene]([ExtResource("28_1irq3"), ExtResource("30_rcrbw"), ExtResource("5_8ra5a")])
-max_enemies = 50
+max_enemies = 70
 time_between_spawns = 1.0
 enemies_per_spawn = 2
 kill_count_for_next_difficulty = 30
@@ -157,7 +157,7 @@ metadata/_custom_type_script = "uid://yoihu0w1knuk"
 [sub_resource type="Resource" id="Resource_gwyuf"]
 script = ExtResource("10_cycrt")
 spawnable_enemies = Array[PackedScene]([ExtResource("29_iycfq"), ExtResource("30_rcrbw"), ExtResource("28_1irq3")])
-max_enemies = 50
+max_enemies = 70
 time_between_spawns = 1.0
 enemies_per_spawn = 2
 kill_count_for_next_difficulty = 30
@@ -167,7 +167,7 @@ metadata/_custom_type_script = "uid://yoihu0w1knuk"
 script = ExtResource("10_cycrt")
 spawnable_enemies = Array[PackedScene]([ExtResource("29_iycfq"), ExtResource("30_rcrbw"), ExtResource("28_1irq3")])
 boss_spawn = ExtResource("15_pfmml")
-max_enemies = 50
+max_enemies = 70
 time_between_spawns = 1.0
 enemies_per_spawn = 2
 kill_count_for_next_difficulty = 40
@@ -177,7 +177,7 @@ metadata/_custom_type_script = "uid://yoihu0w1knuk"
 script = ExtResource("10_cycrt")
 spawnable_enemies = Array[PackedScene]([ExtResource("29_iycfq"), ExtResource("30_rcrbw"), ExtResource("28_1irq3"), ExtResource("8_c88u2")])
 boss_spawn = ExtResource("15_pfmml")
-max_enemies = 50
+max_enemies = 70
 time_between_spawns = 1.0
 enemies_per_spawn = 2
 kill_count_for_next_difficulty = 10
@@ -186,7 +186,7 @@ metadata/_custom_type_script = "uid://yoihu0w1knuk"
 [sub_resource type="Resource" id="Resource_uxuvg"]
 script = ExtResource("10_cycrt")
 spawnable_enemies = Array[PackedScene]([ExtResource("15_pfmml"), ExtResource("29_iycfq"), ExtResource("30_rcrbw"), ExtResource("28_1irq3")])
-max_enemies = 75
+max_enemies = 100
 time_between_spawns = 1.0
 enemies_per_spawn = 3
 kill_count_for_next_difficulty = 10000
@@ -200,22 +200,32 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7sk5s"]
-bg_color = Color(1, 0.494118, 0.172549, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c88u2"]
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7sk5s"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.780392, 0.34902, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gr2jy"]
+bg_color = Color(0.82, 0.54284, 0.3936, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cssx7"]
-bg_color = Color(1, 0.58608, 0.358992, 1)
+bg_color = Color(1, 0.494118, 0.172549, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1irq3"]
-bg_color = Color(0.780258, 0.348489, 0, 1)
+bg_color = Color(0.627451, 0.27451, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iycfq"]
-bg_color = Color(1, 0.494118, 0.172549, 1)
+bg_color = Color(0.780392, 0.34902, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3iae7"]
 shader = ExtResource("32_gr2jy")
@@ -380,7 +390,7 @@ layout_mode = 2
 texture = ExtResource("8_k5pu3")
 stretch_mode = 4
 
-[node name="GameOverMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("score_tracker", "final_score_label", "save_score_button", "player_name_field", "leaderboard_text")]
+[node name="GameOverMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("final_score_label", "save_score_button", "player_name_field", "leaderboard_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -388,7 +398,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_mwgft")
-score_tracker = NodePath("../ScoreTracker")
 final_score_label = NodePath("FinalScoreLabel")
 save_score_button = NodePath("Leaderboard/PlayerNameField/Button")
 player_name_field = NodePath("Leaderboard/PlayerNameField/PlayerNameEdit")
@@ -416,12 +425,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -210.0
+offset_left = -424.0
 offset_top = 112.0
-offset_right = 210.0
+offset_right = 424.0
 offset_bottom = 148.0
 grow_horizontal = 2
-text = "FINAL SCORE: 1000"
+text = "SCORE: 100, HIGH SCORE: 1000"
 label_settings = ExtResource("18_nc5r2")
 horizontal_alignment = 1
 
@@ -465,8 +474,11 @@ offset_top = -21.0
 offset_right = 166.0
 offset_bottom = 23.0
 grow_vertical = 2
+theme_override_colors/font_uneditable_color = Color(0.517184, 0.517184, 0.517184, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("19_sjhni")
 theme_override_font_sizes/font_size = 23
+theme_override_styles/read_only = SubResource("StyleBoxFlat_c88u2")
 theme_override_styles/normal = SubResource("StyleBoxFlat_7sk5s")
 placeholder_text = "Enter name"
 max_length = 9
@@ -484,9 +496,11 @@ offset_top = -22.0
 offset_bottom = 22.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_colors/font_disabled_color = Color(0.687215, 0.687215, 0.687215, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("19_sjhni")
 theme_override_font_sizes/font_size = 23
+theme_override_styles/disabled = SubResource("StyleBoxFlat_gr2jy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_cssx7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_1irq3")
 theme_override_styles/normal = SubResource("StyleBoxFlat_iycfq")

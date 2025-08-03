@@ -29,11 +29,11 @@ func set_active(active: bool) -> void:
 
 
 func on_preparing_to_fire() -> void:
-	attack_charge_effect.emitting = true
+	attack_charge_effect.set_enabled(true)
 
 
 func on_projectile_fired() -> void:
-	attack_charge_effect.emitting = false
+	attack_charge_effect.set_enabled(false)
 
 
 func on_enemy_killed() -> void:

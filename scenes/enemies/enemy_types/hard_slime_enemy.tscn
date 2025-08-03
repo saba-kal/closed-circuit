@@ -49,9 +49,12 @@ radius = 14.0
 [node name="SlimeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack")]
 collision_layer = 4
 script = ExtResource("1_yve78")
+max_wander_path_distance = 150.0
 attack = NodePath("CircleAndShootAttack")
-wander_speed = 80.0
-attack_speed = 150.0
+min_wander_speed = 60.0
+max_wander_speed = 200.0
+min_attack_speed = 100.0
+max_attack_speed = 250.0
 score_value = 4
 
 [node name="Visuals" type="Node2D" parent="."]

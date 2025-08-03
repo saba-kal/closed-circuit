@@ -53,8 +53,10 @@ script = ExtResource("1_yewhi")
 min_wander_path_distance = 40.0
 max_wander_path_distance = 50.0
 attack = NodePath("StopAndChargeAttack")
-wander_speed = 200.0
-attack_speed = 300.0
+min_wander_speed = 150.0
+max_wander_speed = 250.0
+min_attack_speed = 400.0
+max_attack_speed = 600.0
 score_value = 5
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -91,7 +93,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="StopAndChargeAttack" parent="." node_paths=PackedStringArray("nav_agent", "charge_visuals") instance=ExtResource("7_yqsiy")]
-stop_distance = 200.0
+stop_distance = 350.0
 time_between_charges = 2.0
 windup_time = 0.5
 charge_speed = 1000.0

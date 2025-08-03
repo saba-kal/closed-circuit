@@ -14,24 +14,35 @@ enum State
 @export var max_wander_path_distance: float = 100
 @export var follow_player_on_wander: bool = false
 @export var attack: EnemyAttack
-@export var wander_speed: float = 100
-@export var attack_speed: float = 100
+@export var min_wander_speed: float = 80
+@export var max_wander_speed: float = 120
+@export var min_attack_speed: float = 80
+@export var max_attack_speed: float = 120
 @export var required_connections: int = 1
 @export var score_value: int = 1
 
 @onready var nav_agent: NavAgent = $NavAgent
 
+var wander_speed: float = 100
+var attack_speed: float = 100
 var current_state: State = State.WANDER
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var player: Player
 var current_attach_count: int = 0
+var speed_change_timer: Timer = Timer.new()
 
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
+	speed_change_timer.one_shot = false
+	speed_change_timer.wait_time = 3.0
+	add_child(speed_change_timer)
+	speed_change_timer.timeout.connect(on_speed_change_timeout)
+	speed_change_timer.start()
 	SignalBus.wire_attached.connect(on_wire_attached)
 	SignalBus.wire_reset.connect(on_wire_reset)
 	SignalBus.game_over.connect(on_game_over)
+	set_random_speeds()
 	enter_wander_state()
 
 
@@ -90,6 +101,21 @@ func on_wire_reset() -> void:
 
 func on_game_over() -> void:
 	enter_wander_state()
+
+
+func on_speed_change_timeout() -> void:
+	set_random_speeds()
+	match current_state:
+		State.WANDER:
+			nav_agent.max_speed = wander_speed
+		State.ATTACK:
+			nav_agent.max_speed = attack_speed
+
+
+func set_random_speeds() -> void:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	wander_speed = rng.randf_range(min_wander_speed, max_wander_speed)
+	attack_speed = rng.randf_range(min_attack_speed, max_attack_speed)
 
 
 func set_state(state: State) -> void:

@@ -45,11 +45,11 @@ func _process(delta: float) -> void:
 				change_state(State.CHARGING)
 		State.CHARGING:
 			nav_agent.set_movement_target(global_position)
-			attack_charge_effect.emitting = true
+			attack_charge_effect.set_enabled(true)
 			if time_in_state >= charge_time && time_since_last_shot >= time_between_shots:
 				fire_projectile()
 				time_since_last_shot = 0
-				attack_charge_effect.emitting = false
+				attack_charge_effect.set_enabled(false)
 				if is_in_firing_distance():
 					change_state(State.STOPPED)
 				else:

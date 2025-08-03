@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgsme7imgf84u"]
+[gd_scene load_steps=5 format=3 uid="uid://bgsme7imgf84u"]
 
 [ext_resource type="Script" uid="uid://c6y8rd236kr2e" path="res://scripts/projectiles/projectile_shooter.gd" id="1_8ao2b"]
 [ext_resource type="PackedScene" uid="uid://sl86ko4jacnu" path="res://scenes/projectiles/small_projectile.tscn" id="2_m3m7j"]
+[ext_resource type="PackedScene" uid="uid://di8duy842kauq" path="res://scenes/effects/projectile_shoot_effect.tscn" id="3_5imio"]
 [ext_resource type="AudioStream" uid="uid://ca6hjxuq4v7wo" path="res://audio/sfx/projectile_shoot.wav" id="3_m3m7j"]
 
 [node name="ProjectileShooter" type="Node2D"]
@@ -10,6 +11,7 @@ projectile_scene = ExtResource("2_m3m7j")
 projectile_speed = 120.0
 time_between_shots = 2.0
 shot_delay = 0.5
+spawn_effect = ExtResource("3_5imio")
 projectile_count = 3
 
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
