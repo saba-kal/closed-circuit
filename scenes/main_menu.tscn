@@ -70,8 +70,9 @@ height = 16
 fill_from = Vector2(1, 0.747863)
 
 [sub_resource type="LabelSettings" id="LabelSettings_j7ex8"]
+line_spacing = 50.0
 font = ExtResource("11_5pajh")
-font_size = 92
+font_size = 200
 font_color = Color(1, 0.494118, 0.172549, 1)
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
@@ -158,18 +159,23 @@ texture = SubResource("GradientTexture2D_j7ex8")
 
 [node name="TitleLabel" type="Label" parent="CanvasLayer"]
 texture_filter = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -364.0
+offset_top = -317.0
 offset_right = 364.0
-offset_bottom = 136.0
+offset_bottom = 203.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 60
-text = "LINK, LOOP, ZAP"
+text = "LINK LOOP ZAP"
 label_settings = SubResource("LabelSettings_j7ex8")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="NavButtons" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 7

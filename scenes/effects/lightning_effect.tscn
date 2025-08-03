@@ -10,10 +10,11 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fhk22"]
+resource_local_to_scene = true
 lifetime_randomness = 0.5
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(100, 50, 1)
+emission_box_extents = Vector3(500, 50, 1)
 angle_min = 1.07288e-05
 angle_max = 360.0
 spread = 180.0
@@ -23,14 +24,15 @@ gravity = Vector3(0, 0, 0)
 damping_max = 50.0
 scale_min = 2.0
 scale_max = 2.0
-color = Color(5, 5, 0, 1)
-anim_speed_min = 2.0
-anim_speed_max = 2.0
+color = Color(3, 3, 0, 1)
+anim_speed_min = 4.0
+anim_speed_max = 4.0
 
 [node name="LightningEffect" type="GPUParticles2D"]
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_0ftci")
-amount = 16
+amount = 50
 texture = ExtResource("1_xsept")
 lifetime = 1.5
+explosiveness = 0.5
 process_material = SubResource("ParticleProcessMaterial_fhk22")

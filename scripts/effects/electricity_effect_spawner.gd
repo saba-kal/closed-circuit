@@ -32,7 +32,8 @@ func on_enemies_stunned(enemies: Array[Enemy]) -> void:
 
 		# Set effect length to match distance between the two enemies.
 		var emission_box: Vector3 = effect.process_material.emission_box_extents
-		emission_box.x = enemy2.global_position.distance_to(enemy1.global_position)
+		emission_box.x = enemy2.global_position.distance_to(enemy1.global_position) / 2.0
+		effect.process_material.emission_box_extents = emission_box
 	
 	zap_sound.play()
 	await get_tree().create_timer(0.5).timeout
