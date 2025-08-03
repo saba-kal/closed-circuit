@@ -9,7 +9,7 @@ extends Control
 
 var max_leaderboard_entries: int = 10
 var player_saved_score: bool = false
-var leaderboard_name: String = "closed_cirtcuit"
+var leaderboard_name: String = "closed_circuit2"
 
 
 func _enter_tree() -> void:
@@ -35,7 +35,7 @@ func on_game_over() -> void:
 	else:
 		final_score_label.text = "SCORE %d, HIGH SCORE: %d" % [PlayerData.current_score, PlayerData.highest_score]
 	leaderboard_text.text = "Loading..."
-	SilentWolf.Scores.get_scores(0, leaderboard_name)
+	SilentWolf.Scores.get_scores(max_leaderboard_entries, leaderboard_name)
 
 
 func on_get_scores_complete(result: Dictionary) -> void:
@@ -74,7 +74,7 @@ func on_save_score_button() -> void:
 	PlayerData.player_name = player_name_field.text
 	await SilentWolf.Scores.save_score(player_name_field.text, PlayerData.highest_score, leaderboard_name).sw_save_score_complete
 	player_saved_score = true
-	SilentWolf.Scores.get_scores(0, leaderboard_name)
+	SilentWolf.Scores.get_scores(max_leaderboard_entries, leaderboard_name)
 
 
 func on_player_name_text_changed(new_text: String) -> void:
